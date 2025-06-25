@@ -9,7 +9,7 @@ public class TypeTransaction : ValueObject
 
     public TypeTransaction(int type)
     {
-        RoleException.ThrowIfNotDefined<EType>(type, "Type Inválido.");
+        EnumException.ThrowIfNotDefined<EType>(type, "Type Inválido.");
         Value = (EType)type;
     }
 }

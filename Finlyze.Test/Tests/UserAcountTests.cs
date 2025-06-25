@@ -193,7 +193,7 @@ public class UserAccountTest
     [InlineData(-1)]
     public static void Dado_Um_Role_Inválido_Lança_Exceção(int role)
     {
-        var ex = Assert.Throws<RoleException>(() => new Role(role));
+        var ex = Assert.Throws<EnumException>(() => new Role(role));
         Assert.NotNull(ex);
         Assert.Equal("Role Inválido.", ex.Message);
     }

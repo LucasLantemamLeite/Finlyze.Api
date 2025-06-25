@@ -62,7 +62,7 @@ public class TransactionTest
     [InlineData(-1)]
     public static void Dado_Um_TypeTransaction_Inválido_Lança_Exceção(int type)
     {
-        var ex = Assert.Throws<RoleException>(() => new TypeTransaction(type));
+        var ex = Assert.Throws<EnumException>(() => new TypeTransaction(type));
         Assert.NotNull(ex);
         Assert.Equal("Type Inválido.", ex.Message);
     }
