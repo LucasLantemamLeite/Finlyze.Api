@@ -5,20 +5,20 @@ namespace Finlyze.Domain.Entity;
 
 public class Transaction : Entity
 {
-    public Title Title { get; private set; }
-    public Description? Description { get; private set; }
+    public TransactionTitle TransactionTitle { get; private set; }
+    public TransactionDescription? Description { get; private set; }
     public Amount Amount { get; private set; }
     public TypeTransaction TypeTransaction { get; private set; }
-    public CreateAt CreateAt { get; private set; }
-    public UpdateAt UpdateAt { get; private set; }
+    public TransactionCreateAt TransactionCreateAt { get; private set; }
+    public TransactionUpdateAt TransactionUpdateAt { get; private set; }
 
     public Transaction(string title, string? description, decimal amount, int type, DateTime create)
     {
-        Title = new Title(title);
-        Description = new Description(description);
+        TransactionTitle = new TransactionTitle(title);
+        Description = new TransactionDescription(description);
         Amount = new Amount(amount);
         TypeTransaction = new TypeTransaction(type);
-        CreateAt = new CreateAt(create);
-        UpdateAt = new UpdateAt();
+        TransactionCreateAt = new TransactionCreateAt(create);
+        TransactionUpdateAt = new TransactionUpdateAt();
     }
 }
