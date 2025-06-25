@@ -1,3 +1,5 @@
+using Finlyze.Domain.ValueObject.Validation;
+
 namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
 public class Description : ValueObject
@@ -6,6 +8,7 @@ public class Description : ValueObject
 
     public Description(string description)
     {
+        DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(description), "Description não pode ser vazio ou nulo.");
         Value = description;
     }
 }

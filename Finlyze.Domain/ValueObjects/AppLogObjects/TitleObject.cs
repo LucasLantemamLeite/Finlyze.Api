@@ -1,3 +1,5 @@
+using Finlyze.Domain.ValueObject.Validation;
+
 namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
 public class Title : ValueObject
@@ -6,6 +8,7 @@ public class Title : ValueObject
 
     public Title(string title)
     {
+        DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(title), "Title não pode ser vazio ou nulo.");
         Value = title;
     }
 }
