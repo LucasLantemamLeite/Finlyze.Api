@@ -1,3 +1,5 @@
+using Finlyze.Domain.ValueObject.Validation;
+
 namespace Finlyze.Domain.ValueObject.UserAccountObject;
 
 public class PhoneNumber : ValueObject
@@ -6,6 +8,7 @@ public class PhoneNumber : ValueObject
 
     public PhoneNumber(string phone)
     {
+        PhoneNumberRegexException.ThrowIfNotMatch(phone, "PhoneNumber Inválido.");
         Value = phone;
     }
 }
