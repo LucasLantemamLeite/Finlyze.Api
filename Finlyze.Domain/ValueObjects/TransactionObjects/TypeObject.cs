@@ -2,11 +2,11 @@ using Finlyze.Domain.ValueObject.Enums;
 
 namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
-public class Type : ValueObject
+public class TypeTransaction : ValueObject
 {
     public EType Value { get; set; }
 
-    public Type(int type)
+    public TypeTransaction(int type)
     {
         Value = (EType)type;
     }

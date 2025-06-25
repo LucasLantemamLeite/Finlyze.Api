@@ -1,10 +1,10 @@
 namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
-public class TransactionDate : ValueObject
+public class CreateAt : ValueObject
 {
     public DateTime Value { get; set; }
 
-    public TransactionDate(DateTime? date)
+    public CreateAt(DateTime? date)
     {
         Value = date ?? DateTime.Now;
     }
