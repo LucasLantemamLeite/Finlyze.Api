@@ -4,10 +4,10 @@ namespace Finlyze.Domain.Entity;
 
 public class AppLog : Entity
 {
-    public LogType LogType { get; set; }
-    public LogTitle LogTitle { get; set; }
-    public LogDescription LogDescription { get; set; }
-    public LogCreateAt CreateAt { get; set; }
+    public LogType LogType { get; private set; }
+    public LogTitle LogTitle { get; private set; }
+    public LogDescription LogDescription { get; private set; }
+    public LogCreateAt CreateAt { get; private set; }
 
     public AppLog(int log, string title, string description)
     {
