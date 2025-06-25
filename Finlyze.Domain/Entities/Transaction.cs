@@ -1,3 +1,4 @@
+using System.Net.Sockets;
 using Finlyze.Domain.ValueObject.TransactionObjects;
 
 namespace Finlyze.Domain.Entity;
@@ -11,13 +12,13 @@ public class Transaction : Entity
     public CreateAt CreateAt { get; private set; }
     public UpdateAt UpdateAt { get; private set; }
 
-    public Transaction(string title, string? description, decimal? amount, int type, DateTime create, DateTime update)
+    public Transaction(string title, string? description, decimal amount, int type, DateTime create)
     {
         Title = new Title(title);
         Description = new Description(description);
         Amount = new Amount(amount);
         TypeTransaction = new TypeTransaction(type);
         CreateAt = new CreateAt(create);
-        UpdateAt = new UpdateAt(update);
+        UpdateAt = new UpdateAt();
     }
 }
