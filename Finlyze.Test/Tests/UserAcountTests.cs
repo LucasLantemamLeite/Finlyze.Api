@@ -1,7 +1,5 @@
-using Finlyze.Domain.ValueObject.Enums;
 using Finlyze.Domain.ValueObject.UserAccountObject;
 using Finlyze.Domain.ValueObject.Validation;
-using Microsoft.VisualStudio.TestPlatform.Common;
 
 namespace Finlyze.Test.Validation.UserAccountTests;
 
