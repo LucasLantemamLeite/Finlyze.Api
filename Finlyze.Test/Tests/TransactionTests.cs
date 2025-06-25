@@ -13,7 +13,7 @@ public class TransactionTest
     [InlineData("Supermercado")]
     public static void Dado_Um_Title_Válido_Adiciona_Na_Entidade(string title)
     {
-        var ex = Record.Exception(() => new Title(title));
+        var ex = Record.Exception(() => new TransactionTitle(title));
         Assert.Null(ex);
     }
 
@@ -23,7 +23,7 @@ public class TransactionTest
     [InlineData(null)]
     public static void Dado_Um_Title_Vazio_Ou_Nulo_Lança_Exceção(string title)
     {
-        var ex = Assert.Throws<DomainException>(() => new Title(title));
+        var ex = Assert.Throws<DomainException>(() => new TransactionTitle(title));
         Assert.NotNull(ex);
         Assert.Equal("Title não pode ser vazio ou nulo.", ex.Message);
     }
