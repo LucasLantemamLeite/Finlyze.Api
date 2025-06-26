@@ -56,4 +56,4 @@ A camada de testes automatizados cobre os **Value Objects** das entidades, valid
 
 ## 📚 Mais informações
 
-Acesse a [Wiki do projeto](https://github.com/LucasLantemamLeite/Finlyze.Api.wiki.git) para mais detalhes sobre a estrutura, padrões adotados e convenções de desenvolvimento.
+Acesse a [Wiki do projeto](https://github.com/LucasLantemamLeite/Finlyze.Api/wiki) para mais detalhes sobre a estrutura, padrões adotados e convenções de desenvolvimento.
