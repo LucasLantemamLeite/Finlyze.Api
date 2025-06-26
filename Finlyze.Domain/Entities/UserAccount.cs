@@ -20,6 +20,7 @@ public class UserAccount : Entity
         Password = new Password(password);
         PhoneNumber = new PhoneNumber(phone);
         BirthDate = new BirthDate(birth);
+        CreateAt = new CreateAt();
         Active = new Active(active);
         Role = new Role(role);
     }
