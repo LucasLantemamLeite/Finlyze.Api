@@ -11,4 +11,6 @@ public class BirthDate : ValueObject
         BirthDateException.ThrowIfFalse(birth, "Data não pode ser futura.", "Usuário não pode ser menor de idade.");
         Value = birth;
     }
+
+    private BirthDate() { }
 }

@@ -11,4 +11,6 @@ public class PhoneNumber : ValueObject
         PhoneNumberRegexException.ThrowIfNotMatch(phone, "PhoneNumber Inválido.");
         Value = phone;
     }
+
+    private PhoneNumber() { }
 }

@@ -11,4 +11,6 @@ public class LogDescription : ValueObject
         DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(description), "Description não pode ser vazio ou nulo.");
         Value = description;
     }
+
+    private LogDescription() { }
 }

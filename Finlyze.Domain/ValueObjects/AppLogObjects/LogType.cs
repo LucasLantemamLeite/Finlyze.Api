@@ -12,4 +12,6 @@ public class LogType : ValueObject
         EnumException.ThrowIfNotDefined<ELog>(log, "Enum Inválido.");
         Value = (ELog)log;
     }
+
+    private LogType() { }
 }

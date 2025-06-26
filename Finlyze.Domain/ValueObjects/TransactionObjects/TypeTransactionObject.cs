@@ -12,4 +12,6 @@ public class TypeTransaction : ValueObject
         EnumException.ThrowIfNotDefined<EType>(type, "Type Inválido.");
         Value = (EType)type;
     }
+
+    private TypeTransaction() { }
 }

@@ -16,4 +16,6 @@ public class AppLog : Entity
         LogDescription = new LogDescription(description);
         LogCreateAt = new LogCreateAt();
     }
+
+    private AppLog() { }
 }

@@ -8,4 +8,6 @@ public class TransactionCreateAt : ValueObject
     {
         Value = date ?? DateTime.Now;
     }
+
+    private TransactionCreateAt() { }
 }

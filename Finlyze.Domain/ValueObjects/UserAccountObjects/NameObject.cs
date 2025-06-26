@@ -11,4 +11,6 @@ public class Name : ValueObject
         DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(name), "Name não pode ser vazio ou nulo.");
         Value = name;
     }
+
+    private Name() { }
 }

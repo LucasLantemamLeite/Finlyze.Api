@@ -11,4 +11,6 @@ public class TransactionTitle : ValueObject
         DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(title), "Title não pode ser vazio ou nulo.");
         Value = title;
     }
+
+    private TransactionTitle() { }
 }

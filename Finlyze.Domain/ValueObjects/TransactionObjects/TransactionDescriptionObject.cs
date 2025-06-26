@@ -8,4 +8,6 @@ public class TransactionDescription : ValueObject
     {
         Value = description;
     }
+
+    private TransactionDescription() { }
 }

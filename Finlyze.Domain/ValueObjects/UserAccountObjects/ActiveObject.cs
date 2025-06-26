@@ -8,4 +8,6 @@ public class Active : ValueObject
     {
         Value = active;
     }
+
+    private Active() { }
 }
