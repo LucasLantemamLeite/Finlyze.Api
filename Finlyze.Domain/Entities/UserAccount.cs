@@ -12,6 +12,7 @@ public class UserAccount : Entity
     public CreateAt CreateAt { get; private set; }
     public Active Active { get; private set; }
     public Role Role { get; private set; }
+    public List<Transaction> Transactions { get; private set; } = new();
 
     public UserAccount(string name, string email, string password, string phone, DateOnly birth, bool active = true, int role = 1)
     {
@@ -24,4 +25,6 @@ public class UserAccount : Entity
         Active = new Active(active);
         Role = new Role(role);
     }
+
+    private UserAccount() { }
 }
