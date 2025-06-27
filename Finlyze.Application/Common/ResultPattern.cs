@@ -1,12 +1,12 @@
-namespace Finlyze.Domain.Interfaces.Result;
+namespace Finlyze.Application.Interface.Result;
 
-public class ResultPattern<T> where T : Entity.Entity
+public class ResultPattern<T>
 {
     public string? Message { get; }
     public bool Success { get; }
     public T? Data { get; }
 
-    public ResultPattern(bool success, string? message = null, T? data = null)
+    public ResultPattern(bool success, string? message = null, T? data = default)
     {
         Message = message;
         Success = success;
