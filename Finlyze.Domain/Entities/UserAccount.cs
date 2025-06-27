@@ -27,4 +27,5 @@ public class UserAccount : Entity
     }
 
     private UserAccount() { }
+
 }
