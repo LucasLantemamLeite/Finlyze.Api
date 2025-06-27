@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Finlyze.Domain\Finlyze.Domain.csproj" />
+    <ProjectReference Include="..\Finlyze.Application\Finlyze.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
