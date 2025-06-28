@@ -1,4 +1,4 @@
-namespace Finlyze.Application.Interface.Dto;
+namespace Finlyze.Application.Dto;
 
 public class UserAccountDto
 {
