@@ -31,12 +31,12 @@ public class UserAccountQuery : IUserAccountQuery
         }
     }
 
-    public async Task<ResultPattern<UserAccountDto>> GetByLoginAsync(string login)
+    public async Task<ResultPattern<UserAccountDto>> GetByEmailAsync(string email)
     {
         try
         {
-            var sql = $"{SqlSelectBase} WHERE Login = @Login";
-            var user = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Login = login });
+            var sql = $"{SqlSelectBase} WHERE Email = @Email";
+            var user = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Email = email });
 
             return ResultPattern<UserAccountDto>.Ok(null, user);
         }
