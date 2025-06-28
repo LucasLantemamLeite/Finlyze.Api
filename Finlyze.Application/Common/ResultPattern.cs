@@ -1,4 +1,4 @@
-namespace Finlyze.Application.Interface.Result;
+namespace Finlyze.Application.Abstract.Interface.Result;
 
 public class ResultPattern<T>
 {
