@@ -1,7 +1,7 @@
 using Finlyze.Domain.ValueObject.AppLogObjects;
 using Finlyze.Domain.ValueObject.Validation;
 
-namespace Finlyze.Test.Validation.AppLogTest;
+namespace Finlyze.Test.Validation.Entities;
 
 
 [Trait("Category", "AppLog")]

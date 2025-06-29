@@ -1,7 +1,7 @@
 using Finlyze.Domain.ValueObject.TransactionObjects;
 using Finlyze.Domain.ValueObject.Validation;
 
-namespace Finlyze.Test.Validation.Transaction;
+namespace Finlyze.Test.Validation.Entities;
 
 [Trait("Category", "Transaction")]
 public class TransactionTest

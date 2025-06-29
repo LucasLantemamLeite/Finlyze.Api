@@ -1,7 +1,7 @@
 using Finlyze.Domain.ValueObject.UserAccountObject;
 using Finlyze.Domain.ValueObject.Validation;
 
-namespace Finlyze.Test.Validation.UserAccountTests;
+namespace Finlyze.Test.Validation.Entities;
 
 [Trait("Category", "UserAccount")]
 public class UserAccountTest
