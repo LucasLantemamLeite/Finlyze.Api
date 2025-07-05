@@ -8,4 +8,9 @@ public class CreateAt : ValueObject
     {
         Value = DateTime.UtcNow;
     }
+
+    public CreateAt(DateTime create)
+    {
+        Value = create;
+    }
 }
