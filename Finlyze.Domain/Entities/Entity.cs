@@ -8,4 +8,9 @@ public abstract class Entity
     {
         Id = Guid.NewGuid();
     }
+
+    public Entity(Guid id)
+    {
+        Id = id;
+    }
 }
