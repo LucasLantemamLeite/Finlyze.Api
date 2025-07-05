@@ -3,8 +3,9 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Application.Dto;
+using Finlyze.Domain.Entity;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces;
+namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 
 public class UserAccountQuery : IUserAccountQuery
 {
@@ -14,37 +15,60 @@ public class UserAccountQuery : IUserAccountQuery
 
     const string SqlSelectBase = "SELECT Id, Name, Email, Password, PhoneNumber, BirthDate, CreateAt, Active, Role FROM UserAccount";
 
-    public async Task<ResultPattern<UserAccountDto>> GetByIdAsync(Guid id)
+    public async Task<ResultPattern<UserAccount>> GetByIdAsync(Guid id)
     {
         try
         {
             var sql = $"{SqlSelectBase} WHERE Id = @Id";
-            var user = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Id = id });
+            var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Id = id });
 
-            return ResultPattern<UserAccountDto>.Ok(null, user);
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+
+            return ResultPattern<UserAccount>.Ok(null, userAccount);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<UserAccountDto>.Fail($"Infrastructure -> UserAccountQuery -> GetByIdAsync: {errorMsg}");
+            return ResultPattern<UserAccount>.Fail($"Infrastructure -> UserAccountQuery -> GetByIdAsync: {errorMsg}");
         }
     }
 
-    public async Task<ResultPattern<UserAccountDto>> GetByEmailAsync(string email)
+    public async Task<ResultPattern<UserAccount>> GetByEmailAsync(string email)
     {
         try
         {
             var sql = $"{SqlSelectBase} WHERE Email = @Email";
-            var user = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Email = email });
+            var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Email = email });
 
-            return ResultPattern<UserAccountDto>.Ok(null, user);
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+
+            return ResultPattern<UserAccount>.Ok(null, userAccount);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<UserAccountDto>.Fail($"Infrastructure -> UserAccountQuery -> GeyByLoginAsync: {errorMsg}");
+            return ResultPattern<UserAccount>.Fail($"Infrastructure -> UserAccountQuery -> GeyByLoginAsync: {errorMsg}");
+        }
+    }
+
+    public async Task<ResultPattern<UserAccount>> GetByPhoneNumberAsync(string phone)
+    {
+        try
+        {
+            var sql = $"{SqlSelectBase} WHERE PhoneNumber = @PhoneNumber";
+            var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { PhoneNumber = phone });
+
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+
+            return ResultPattern<UserAccount>.Ok(null, userAccount);
+        }
+
+        catch (Exception e)
+        {
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            return ResultPattern<UserAccount>.Fail($"Infrastructure -> UserAccountQuery -> GetByPhoneNumberAsync: {errorMsg}");
         }
     }
 }
