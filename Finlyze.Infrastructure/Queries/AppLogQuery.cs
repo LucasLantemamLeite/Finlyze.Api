@@ -4,7 +4,7 @@ using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Application.Dto;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces;
+namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 
 public class AppLogQuery : IAppLogQuery
 {
