@@ -3,16 +3,14 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
+using Finlyze.Application.Authentication.Hasher;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
 public class UserAccountRepository : IUserAccountRepository
 {
-
     private readonly IDbConnection _connection;
-
     public UserAccountRepository(IDbConnection connection) => _connection = connection;
-
     public async Task<ResultPattern<UserAccount>> CreateAsync(UserAccount user)
     {
         try
@@ -28,7 +26,7 @@ public class UserAccountRepository : IUserAccountRepository
                 Id = user.Id,
                 Name = user.Name.Value,
                 Email = user.Email.Value,
-                Password = user.Password.Value,
+                Password = user.Password.Value.GenerateHash(),
                 PhoneNumber = user.PhoneNumber.Value,
                 BirthDate = user.BirthDate.Value,
                 CreateAt = user.CreateAt.Value,
@@ -69,8 +67,18 @@ public class UserAccountRepository : IUserAccountRepository
     {
         try
         {
-            var sql = @"UPDATE UserAccount SET Name = @Name, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber, Active = @Active, Role = @Role WHERE Id = @Id";
-            var rows = await _connection.ExecuteAsync(sql, user);
+            var sql = @"UPDATE UserAccount SET Name = @Name, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber WHERE Id = @Id";
+
+            var parameters = new
+            {
+                Id = user.Id,
+                Name = user.Name.Value,
+                Email = user.Email.Value,
+                Password = user.Password.Value.GenerateHash(),
+                PhoneNumber = user.PhoneNumber.Value
+            };
+
+            var rows = await _connection.ExecuteAsync(sql, parameters);
 
             return ResultPattern<UserAccount>.Ok($"Conta atualizado com sucesso, linhas afetadas: {rows}", null);
         }
