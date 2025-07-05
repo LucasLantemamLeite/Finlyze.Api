@@ -1,10 +1,11 @@
 using Finlyze.Application.Abstract.Interface.Result;
-using Finlyze.Application.Dto;
+using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
 public interface IUserAccountQuery
 {
-    Task<ResultPattern<UserAccountDto>> GetByIdAsync(Guid id);
-    Task<ResultPattern<UserAccountDto>> GetByEmailAsync(string email);
+    Task<ResultPattern<UserAccount>> GetByIdAsync(Guid id);
+    Task<ResultPattern<UserAccount>> GetByEmailAsync(string email);
+    Task<ResultPattern<UserAccount>> GetByPhoneNumberAsync(string phone);
 }
