@@ -1,5 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <ItemGroup>
+    <ProjectReference Include="..\Finlyze.Domain\Finlyze.Domain.csproj" />
+    <ProjectReference Include="..\Finlyze.Application\Finlyze.Application.csproj" />
+    <ProjectReference Include="..\Finlyze.Infrastructure\Finlyze.Infrastructure.csproj" />
+    <ProjectReference Include="..\Finlyze.Migrations\Finlyze.Migrations.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="microsoft.entityframeworkcore" Version="9.0.6" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
