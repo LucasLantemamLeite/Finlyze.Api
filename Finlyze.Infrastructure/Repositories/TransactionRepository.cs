@@ -8,11 +8,8 @@ namespace Finlyze.Infrastructure.Implementation.Interfaces;
 
 public class TransactionRepository : ITransactionRepository
 {
-
     private readonly IDbConnection _connection;
-
     public TransactionRepository(IDbConnection connection) => _connection = connection;
-
     public async Task<ResultPattern<Transaction>> CreateAsync(Transaction transaction)
     {
         try
