@@ -3,17 +3,13 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Domain.Entity;
-using Finlyze.Domain.ValueObject.AppLogObjects;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces;
 
 public class AppLogRepository : IAppLogRepository
 {
-
     private readonly IDbConnection _connection;
-
     public AppLogRepository(IDbConnection connection) => _connection = connection;
-
     public async Task<ResultPattern<AppLog>> CreateAsync(AppLog log)
     {
         try
