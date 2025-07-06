@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finlyze.Infrastructure", "F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finlyze.Application", "Finlyze.Application\Finlyze.Application.csproj", "{9DC84B95-F1EA-486E-9642-5EA9BFFF8E89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Finlyze.Api", "Finlyze.Api\Finlyze.Api.csproj", "{81A08C2F-DC12-48A1-B581-F93C8FD62561}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{9DC84B95-F1EA-486E-9642-5EA9BFFF8E89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DC84B95-F1EA-486E-9642-5EA9BFFF8E89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DC84B95-F1EA-486E-9642-5EA9BFFF8E89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81A08C2F-DC12-48A1-B581-F93C8FD62561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81A08C2F-DC12-48A1-B581-F93C8FD62561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81A08C2F-DC12-48A1-B581-F93C8FD62561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81A08C2F-DC12-48A1-B581-F93C8FD62561}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
