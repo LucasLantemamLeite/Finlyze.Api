@@ -28,7 +28,7 @@ public class UserAccountRepository : IUserAccountRepository
                 Email = user.Email.Value,
                 Password = user.Password.Value.GenerateHash(),
                 PhoneNumber = user.PhoneNumber.Value,
-                BirthDate = user.BirthDate.Value,
+                BirthDate = user.BirthDate.Value.ToDateTime(TimeOnly.MinValue),
                 CreateAt = user.CreateAt.Value,
                 Active = user.Active.Value,
                 Role = user.Role.Value
