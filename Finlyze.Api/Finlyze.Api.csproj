@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="microsoft.aspnetcore.authentication.jwtbearer" Version="8.0.6" />
     <PackageReference Include="microsoft.entityframeworkcore" Version="9.0.6" />
     <PackageReference Include="swashbuckle.aspnetcore" Version="9.0.1" />
   </ItemGroup>
