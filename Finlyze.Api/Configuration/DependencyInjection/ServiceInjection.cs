@@ -19,6 +19,7 @@ public static class ServiceInjection
         JwtSettings.JwtKey = configuration["JwtSettings:JwtKey"] ?? throw new Exception("JwtKey não encontrada");
 
         service.AddScoped<ICreateUserAccountHandler, CreateUserAccountHandler>();
+        service.AddScoped<ILoginUserAccountHandler, LoginUserAccountHandler>();
 
         return service;
     }
