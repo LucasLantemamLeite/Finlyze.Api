@@ -34,7 +34,7 @@ public class CreateUserAccountController : ControllerBase
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            return BadRequest($"CreateUserAccountController -> CreateAsync: {errorMsg}");
+            return BadRequest($"Controller -> CreateUserAccountController -> CreateAsync: {errorMsg}");
         }
     }
 }
