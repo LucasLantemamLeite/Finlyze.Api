@@ -46,7 +46,7 @@ public class CreateUserAccountHandler : ICreateUserAccountHandler
             var appLog = new AppLog(1, "CreateUserAccount", "Conta criada com sucesso.");
             await _appRepository.CreateAsync(appLog);
 
-            return result;
+            return ResultPattern<UserAccount>.Ok(result.Message, userAccount);
         }
 
         catch (Exception e)
