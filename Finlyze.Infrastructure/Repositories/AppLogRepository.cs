@@ -23,6 +23,7 @@ public class AppLogRepository : IAppLogRepository
                 Id = log.Id,
                 LogType = log.LogType.Value,
                 LogTitle = log.LogTitle.Value,
+                LogDescription = log.LogDescription.Value,
                 LogCreateAt = log.LogCreateAt.Value
             };
 
