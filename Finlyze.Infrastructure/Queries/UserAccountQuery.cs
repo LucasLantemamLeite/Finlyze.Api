@@ -22,7 +22,7 @@ public class UserAccountQuery : IUserAccountQuery
             var sql = $"{SqlSelectBase} WHERE Id = @Id";
             var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Id = id });
 
-            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, DateOnly.FromDateTime(query.BirthDate), query.CreateAt, query.Active, query.Role);
 
             return ResultPattern<UserAccount>.Ok(null, userAccount);
         }
@@ -41,7 +41,7 @@ public class UserAccountQuery : IUserAccountQuery
             var sql = $"{SqlSelectBase} WHERE Email = @Email";
             var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { Email = email });
 
-            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, DateOnly.FromDateTime(query.BirthDate), query.CreateAt, query.Active, query.Role);
 
             return ResultPattern<UserAccount>.Ok(null, userAccount);
         }
@@ -60,7 +60,7 @@ public class UserAccountQuery : IUserAccountQuery
             var sql = $"{SqlSelectBase} WHERE PhoneNumber = @PhoneNumber";
             var query = await _connection.QuerySingleOrDefaultAsync<UserAccountDto>(sql, new { PhoneNumber = phone });
 
-            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, query.BirthDate, query.CreateAt, query.Active, query.Role);
+            var userAccount = new UserAccount(query.Id, query.Name, query.Email, query.Password, query.PhoneNumber, DateOnly.FromDateTime(query.BirthDate), query.CreateAt, query.Active, query.Role);
 
             return ResultPattern<UserAccount>.Ok(null, userAccount);
         }
