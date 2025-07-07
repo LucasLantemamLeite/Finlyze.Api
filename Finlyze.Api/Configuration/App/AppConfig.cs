@@ -6,8 +6,8 @@ public static class AppConfig
     {
         app.UseHttpsRedirection();
         app.UseRouting();
-        // app.UseAuthentication();
-        // app.UseAuthorization();
+        app.UseAuthentication();
+        app.UseAuthorization();
 
         if (app.Environment.IsDevelopment())
         {
