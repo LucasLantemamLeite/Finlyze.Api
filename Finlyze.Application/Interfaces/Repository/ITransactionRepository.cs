@@ -1,13 +1,10 @@
-
-using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
 public interface ITransactionRepository
 {
-    Task<ResultPattern<Transaction>> CreateAsync(Transaction transaction);
-    Task<ResultPattern<Transaction>> DeleteAsync(Transaction transaction);
-    Task<ResultPattern<Transaction>> UpdateAsync(Transaction transaction);
-
+    Task<int?> CreateAsync(Transaction transaction);
+    Task<int?> DeleteAsync(Transaction transaction);
+    Task<int?> UpdateAsync(Transaction transaction);
 }

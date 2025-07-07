@@ -1,11 +1,10 @@
-using Finlyze.Application.Abstract.Interface.Result;
 using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
 public interface IAppLogRepository
 {
-    Task<ResultPattern<AppLog>> CreateAsync(AppLog log);
-    Task<ResultPattern<AppLog>> DeleteAsync(AppLog log);
-    Task<ResultPattern<AppLog>> UpdateAsync(AppLog log);
+    Task<int?> CreateAsync(AppLog log);
+    Task<int?> DeleteAsync(AppLog log);
+    Task<int?> UpdateAsync(AppLog log);
 }

@@ -1,13 +1,12 @@
-using Finlyze.Application.Abstract.Interface.Result;
-using Finlyze.Application.Dto;
+using System.Transactions;
 
 namespace Finlyze.Application.Abstract.Interface;
 
 public interface ITransactionQuery
 {
-    Task<ResultPattern<TransactionDto>> GetByIdAsync(Guid id);
-    Task<ResultPattern<IEnumerable<TransactionDto>>> GetByTitleAsync(string title);
-    Task<ResultPattern<IEnumerable<TransactionDto>>> GetByTypeAsync(int type);
-    Task<ResultPattern<IEnumerable<TransactionDto>>> GetByCreateAtAsync(DateTime create_date);
-    Task<ResultPattern<IEnumerable<TransactionDto>>> GetByAmountAsync(decimal amount);
+    Task<Transaction> GetByIdAsync(Guid id);
+    Task<IEnumerable<Transaction>> GetByTitleAsync(string title);
+    Task<IEnumerable<Transaction>> GetByTypeAsync(int type);
+    Task<IEnumerable<Transaction>> GetByCreateAtAsync(DateTime create_date);
+    Task<IEnumerable<Transaction>> GetByAmountAsync(decimal amount);
 }
