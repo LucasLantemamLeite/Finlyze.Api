@@ -31,7 +31,7 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
 
             if (!result.Success)
             {
-                var appLogError = new AppLog(3, "DeleteUserAccount", $"Falha ao deletar conta de usuário, erro recebido: {result.Message}");
+                var appLogError = new AppLog(3, "DeleteUserAccountHandler", $"Falha ao deletar conta de usuário, erro recebido: {result.Message}");
                 await _appRepository.CreateAsync(appLogError);
                 return ResultPattern<UserAccount>.Fail($"DeleteUserAccountHandler -> Handle {result.Message}");
             }
