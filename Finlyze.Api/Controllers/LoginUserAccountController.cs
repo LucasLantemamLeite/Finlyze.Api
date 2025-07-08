@@ -27,13 +27,10 @@ public class LoginUserAccountController : ControllerBase
             var command = new LoginUserAccountCommand(login_dto.Email, login_dto.Password);
             var result = await _handler.Handle(command);
 
-            if (!result.Success && result.Message == "Credenciais incorretas.")
-                return Unauthorized(result.Message);
-
             if (!result.Success)
                 return BadRequest(result.Message);
 
-            return StatusCode(200, new { result.Message, Token = JwtTokenHandler.GenerateToken(result.Data) });
+            return StatusCode(200, new { Message = "Login realizado com sucesso.", TokenKey = JwtTokenHandler.GenerateToken(result.Data) });
         }
 
         catch (Exception e)
