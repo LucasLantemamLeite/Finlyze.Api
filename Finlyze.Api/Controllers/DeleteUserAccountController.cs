@@ -28,21 +28,20 @@ public class DeleteUserAccountController : ControllerBase
             Guid guidId;
 
             if (!Guid.TryParse(userId, out guidId))
-                return BadRequest("Id inválido.");
+                return BadRequest(new { Message = "Id inválido." });
 
             var command = new DeleteUserAccountCommand(guidId);
             var result = await _handler.Handle(command);
 
             if (!result.Success)
-                return BadRequest(result.Message);
+                return BadRequest(new { result.Message });
 
-            return Ok("Conta deletada com sucesso.");
+            return Ok(new { Message = "Conta deletada com sucesso." });
         }
 
-        catch (Exception e)
+        catch
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            return BadRequest($"Controller -> DeleteUserAccountController -> DeleteAsync: {errorMsg}");
+            return StatusCode(500, new { Message = "Erro interno do servidor. Tente novamente mais tarde." });
         }
     }
 }

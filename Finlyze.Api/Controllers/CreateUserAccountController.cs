@@ -22,21 +22,20 @@ public class CreateUserAccountController : ControllerBase
         try
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return ValidationProblem(ModelState);
 
             var command = new CreateUserAccountCommand(user_dto.Name, user_dto.Email, user_dto.Password, user_dto.PhoneNumber, user_dto.BirthDate);
             var result = await _handler.Handle(command);
 
             if (!result.Success)
-                return BadRequest(result.Message);
+                return BadRequest(new { result.Message });
 
-            return StatusCode(200, new { result.Message, TokenKey = JwtTokenHandler.GenerateToken(result.Data) });
+            return Ok(new { result.Message, TokenKey = JwtTokenHandler.GenerateToken(result.Data) });
         }
 
-        catch (Exception e)
+        catch
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            return BadRequest($"Controller -> CreateUserAccountController -> CreateAsync: {errorMsg}");
+            return StatusCode(500, new { Message = "Erro interno do servidor. Tente novamente mais tarde." });
         }
     }
 }

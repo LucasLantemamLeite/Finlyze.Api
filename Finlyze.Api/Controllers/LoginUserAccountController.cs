@@ -22,21 +22,20 @@ public class LoginUserAccountController : ControllerBase
         try
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return ValidationProblem(ModelState);
 
             var command = new LoginUserAccountCommand(login_dto.Email, login_dto.Password);
             var result = await _handler.Handle(command);
 
             if (!result.Success)
-                return BadRequest(result.Message);
+                return BadRequest(new { result.Message });
 
-            return StatusCode(200, new { Message = "Login realizado com sucesso.", TokenKey = JwtTokenHandler.GenerateToken(result.Data) });
+            return Ok(new { Message = "Login realizado com sucesso.", TokenKey = JwtTokenHandler.GenerateToken(result.Data) });
         }
 
-        catch (Exception e)
+        catch
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            return BadRequest($"Controller -> LoginUserAccountController -> LoginAsync: {errorMsg}");
+            return StatusCode(500, new { Message = "Erro interno do servidor. Tente novamente mais tarde." });
         }
     }
 }
