@@ -11,13 +11,12 @@ public class AppLogRepository : IAppLogRepository
     public AppLogRepository(IDbConnection connection) => _connection = connection;
     public async Task<int> CreateAsync(AppLog log)
     {
-        var sql = @"INSERT INTO AppLog (Id, LogType, LogTitle, LogDescription, LogCreateAt)
+        var sql = @"INSERT INTO AppLog (LogType, LogTitle, LogDescription, LogCreateAt)
         VALUES
-        (@Id, @LogType, @LogTitle, @LogDescription, @LogCreateAt)";
+        (@LogType, @LogTitle, @LogDescription, @LogCreateAt)";
 
         var parameters = new
         {
-            Id = log.Id,
             LogType = log.LogType.Value,
             LogTitle = log.LogTitle.Value,
             LogDescription = log.LogDescription.Value,

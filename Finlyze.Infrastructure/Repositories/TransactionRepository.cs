@@ -13,13 +13,12 @@ public class TransactionRepository : ITransactionRepository
     {
 
         var sql = @"INSERT INTO Transaction
-        (Id, TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId)
+        (TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId)
         VALUES
-        (@Id, @TransactionTitle, @TransactionDescription, @Amount, @TypeTransaction, @TransactionCreateAt, @TransactionUpdateAt, @UserAccountId)";
+        (@TransactionTitle, @TransactionDescription, @Amount, @TypeTransaction, @TransactionCreateAt, @TransactionUpdateAt, @UserAccountId)";
 
         var parameters = new
         {
-            Id = transaction.Id,
             TransactionTitle = transaction.TransactionTitle.Value,
             TransactionDescription = transaction.TransactionDescription?.Value,
             Amount = transaction.Amount.Value,
@@ -52,7 +51,7 @@ public class TransactionRepository : ITransactionRepository
             TypeTransaction = transaction.TypeTransaction.Value,
             TransactionCreateAt = transaction.TransactionCreateAt.Value,
             TransactionUpdateAt = transaction.TransactionUpdateAt.Value,
-            UserAccountId = transaction.UserAccountId
+            transaction.UserAccountId
         };
 
         return await _connection.ExecuteAsync(sql, parameters);
