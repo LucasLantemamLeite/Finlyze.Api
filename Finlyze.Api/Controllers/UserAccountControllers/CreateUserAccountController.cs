@@ -5,7 +5,7 @@ using Finlyze.Application.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Finlyze.Api.Controller.UserAccount;
+namespace Finlyze.Api.Controller.Users;
 
 [ApiController]
 [Route("api/v1")]
