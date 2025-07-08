@@ -8,4 +8,9 @@ public class LogCreateAt : ValueObject
     {
         Value = DateTime.UtcNow;
     }
+
+    public LogCreateAt(DateTime create_at)
+    {
+        Value = create_at;
+    }
 }

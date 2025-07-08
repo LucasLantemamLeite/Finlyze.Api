@@ -8,4 +8,9 @@ public class TransactionUpdateAt : ValueObject
     {
         Value = DateTime.UtcNow;
     }
+
+    public TransactionUpdateAt(DateTime update_at)
+    {
+        Value = update_at;
+    }
 }
