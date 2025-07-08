@@ -5,6 +5,7 @@ public enum ELog
     Info = 1,
     Error = 2,
     Warning = 3,
-    Audit = 4,
-    ExternalService = 5
+    Validation = 4,
+    Audit = 5,
+    ExternalService = 6
 }
