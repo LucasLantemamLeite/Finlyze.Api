@@ -31,7 +31,7 @@ public class TransactionQuery : ITransactionQuery
         return raw.ToEnumerableTransaction();
     }
 
-    public async Task<Transaction?> GetByIdAsync(Guid id)
+    public async Task<Transaction?> GetByIdAsync(int id)
     {
         var sql = $"{SqlSelectBase} WHERE Id = @Id";
         var parameters = new { Id = id };

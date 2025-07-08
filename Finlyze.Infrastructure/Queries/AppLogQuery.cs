@@ -22,7 +22,7 @@ public class AppLogQuery : IAppLogQuery
         return raw.ToEnumerableAppLog();
     }
 
-    public async Task<AppLog?> GetByIdAsync(Guid id)
+    public async Task<AppLog?> GetByIdAsync(int id)
     {
         var sql = $"{SqlSelectBase} WHERE Id = @Id";
         var raw = await _connection.QuerySingleOrDefaultAsync<AppLogRaw>(sql, new { Id = id });
