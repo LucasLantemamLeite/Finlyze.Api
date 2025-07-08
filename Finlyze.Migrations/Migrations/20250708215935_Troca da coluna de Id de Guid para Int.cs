@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Finlyze.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialDeploy : Migration
+    public partial class TrocadacolunadeIddeGuidparaInt : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,7 +15,8 @@ namespace Finlyze.Migrations.Migrations
                 name: "AppLog",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "Int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     LogType = table.Column<int>(type: "Int", nullable: false),
                     LogTitle = table.Column<string>(type: "Nvarchar(100)", nullable: false),
                     LogDescription = table.Column<string>(type: "Nvarchar(200)", nullable: false),
@@ -49,7 +50,8 @@ namespace Finlyze.Migrations.Migrations
                 name: "Transaction",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "Int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     TransactionTitle = table.Column<string>(type: "Nvarchar(100)", nullable: false),
                     TransactionDescription = table.Column<string>(type: "Nvarchar(300)", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
