@@ -12,10 +12,10 @@ public class AppLogMap : IEntityTypeConfiguration<AppLog>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
-        .HasColumnName("Id")
-        .HasColumnType("Int")
-        .UseIdentityColumn()
-        .ValueGeneratedOnAdd();
+            .HasColumnName("Id")
+            .HasColumnType("Int")
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
 
         builder.OwnsOne(x => x.LogType, type =>
         {
