@@ -2,6 +2,7 @@ using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Domain.Entity;
+using Finlyze.Domain.ValueObject.Enums;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 
@@ -23,30 +24,27 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
         {
             var existingUser = await _userQuery.GetByIdAsync(command.Id);
 
-            if (existingUser == null)
+            if (existingUser is null)
                 return ResultHandler<UserAccount>.Fail("Conta não encontrada.");
 
             var row = await _userRepository.DeleteAsync(existingUser);
 
             if (row == 0)
             {
-                var appLogError = new AppLog(3, "Delete", "Não foi possível deletar essa conta do usuário");
-                await _appRepository.CreateAsync(appLogError);
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"Falha ao deletar usuário Id: {existingUser.Id}"));
                 return ResultHandler<UserAccount>.Fail("Falha ao deletar conta do usuário.");
             }
 
-            var appLogSucess = new AppLog(1, "Delete", $"Usuário deletado com sucesso do banco de dados");
-            await _appRepository.CreateAsync(appLogSucess);
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Delete", $"Usuário Id: {existingUser.Id} deletado com sucesso"));
 
-            return ResultHandler<UserAccount>.Fail("Conta deletada com sucesso.");
+            return ResultHandler<UserAccount>.Ok("Conta deletada com sucesso.", existingUser);
         }
-
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            var appLogException = new AppLog(3, "Delete", $"{errorMsg}");
-            await _appRepository.CreateAsync(appLogException);
-            return ResultHandler<UserAccount>.Fail($"DeleteUserAccountHandler -> Handle: {errorMsg}");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"DeleteUserAccountHandler -> Handle: {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail($"Erro interno: {errorMsg}");
         }
     }
+
 }

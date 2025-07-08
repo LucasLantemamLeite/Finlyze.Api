@@ -1,57 +1,56 @@
-using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
-using Finlyze.Application.Abstract.Interface.Result;
+using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Domain.Entity;
+using Finlyze.Domain.ValueObject.Enums;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
+namespace Finlyze.Application.Abstract.Interface.Handler;
 
-public class CreateAdmimUserAccountHandler : ICreateAdminUserAccountHandler
+public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 {
     private readonly IUserAccountQuery _userQuery;
     private readonly IUserAccountRepository _userRepository;
     private readonly IAppLogRepository _appRepository;
 
-    public CreateAdmimUserAccountHandler(IUserAccountQuery userQuery, IUserAccountRepository userRepository, IAppLogRepository appRepository)
+    public CreateAdminUserAccountHandler(IUserAccountQuery userQuery, IUserAccountRepository userRepository, IAppLogRepository appRepository)
     {
         _userQuery = userQuery;
         _userRepository = userRepository;
         _appRepository = appRepository;
     }
 
-    public async Task<ResultPattern<UserAccount>> Handle(CreateUserAccountCommand command)
+    public async Task<ResultHandler<UserAccount>> Handle(CreateUserAccountCommand command)
     {
         try
         {
             var existingEmail = await _userQuery.GetByEmailAsync(command.Email);
 
-            if (existingEmail.Data != null)
-                return ResultPattern<UserAccount>.Fail("Email já está em uso.");
+            if (existingEmail is not null)
+                return ResultHandler<UserAccount>.Fail("Email já está em uso.");
 
             var existingPhone = await _userQuery.GetByPhoneNumberAsync(command.PhoneNumber);
 
-            if (existingPhone.Data != null)
-                return ResultPattern<UserAccount>.Fail("PhoneNumber já está em uso.");
+            if (existingPhone is not null)
+                return ResultHandler<UserAccount>.Fail("PhoneNumber já está em uso.");
 
             var userAccount = new UserAccount(command.Name, command.Email, command.Password, command.PhoneNumber, command.BirthDate, true, 2);
 
-            var result = await _userRepository.CreateAsync(userAccount);
+            var row = await _userRepository.CreateAsync(userAccount);
 
-            if (!result.Success)
+            if (row == 0)
             {
-                var appLogError = new AppLog(3, "CreateAdminUserAccount", $"Falha ao criar conta do usuário Admin, erro recebido: {result.Message}.");
-                await _appRepository.CreateAsync(appLogError);
-                return ResultPattern<UserAccount>.Fail(result.Message);
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdminUserAccount", "Não foi possível criar essa conta do usuário Administrador"));
+                return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário.");
             }
 
-            return result;
-        }
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "CreateAdminUserAccount", $"Usuario Admin: {userAccount.Email.Value} criado com sucesso"));
 
+            return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", userAccount);
+        }
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido na camada do Handler.";
-            var appLogException = new AppLog(3, "Exceção no CreateUserAccountHandler", errorMsg);
-            await _appRepository.CreateAsync(appLogException);
-            return ResultPattern<UserAccount>.Fail($"Handler -> CreateUserAccountHandler -> Handle: {errorMsg}");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdminUserAccount", errorMsg));
+            return ResultHandler<UserAccount>.Fail($"CreateAdminUserAccountHandler -> Handle: {errorMsg}");
         }
     }
 }
