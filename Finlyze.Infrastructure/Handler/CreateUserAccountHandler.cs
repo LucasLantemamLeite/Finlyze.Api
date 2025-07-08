@@ -37,12 +37,12 @@ public class CreateUserAccountHandler : ICreateUserAccountHandler
 
             if (rows == 0)
             {
-                var appLogError = new AppLog(3, "Falha ao criar conta do usuário", "Não foi possível criar essa conta do usuário");
+                var appLogError = new AppLog(3, "Create", "Não foi possível criar essa conta do usuário");
                 await _appRepository.CreateAsync(appLogError);
                 return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário");
             }
 
-            var appLogSucess = new AppLog(1, "Conta criado com sucesso", $"Usuario: {userAccount.Email.Value} criado com sucesso");
+            var appLogSucess = new AppLog(1, "Create", $"Usuario: {userAccount.Email.Value} criado com sucesso");
             await _appRepository.CreateAsync(appLogSucess);
 
             return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", userAccount);
@@ -51,7 +51,7 @@ public class CreateUserAccountHandler : ICreateUserAccountHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            var appLogException = new AppLog(3, "Falha ao criar conta do usuário", $"{errorMsg}");
+            var appLogException = new AppLog(3, "Create", $"{errorMsg}");
             await _appRepository.CreateAsync(appLogException);
             return ResultHandler<UserAccount>.Fail($"CreateUserAccountHandler -> Handle: {errorMsg}");
         }
