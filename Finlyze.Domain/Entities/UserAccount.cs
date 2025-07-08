@@ -16,31 +16,31 @@ public class UserAccount : Entity
 
     public void ChangeName(string? name)
     {
-        if (name is not null && !string.IsNullOrWhiteSpace(name))
+        if (!string.IsNullOrWhiteSpace(name) && name != Name.Value)
             Name = new Name(name);
     }
 
     public void ChangeEmail(string? email)
     {
-        if (email is not null && !string.IsNullOrWhiteSpace(email))
+        if (!string.IsNullOrWhiteSpace(email) && email != Email.Value)
             Email = new Email(email);
     }
 
     public void ChangePassword(string? password)
     {
-        if (password is not null && !string.IsNullOrWhiteSpace(password))
+        if (!string.IsNullOrWhiteSpace(password))
             Password = new Password(password);
     }
 
     public void ChangePhoneNumber(string? phone)
     {
-        if (phone is not null && !string.IsNullOrWhiteSpace(phone))
+        if (!string.IsNullOrWhiteSpace(phone) && phone != PhoneNumber.Value)
             PhoneNumber = new PhoneNumber(phone);
     }
 
     public void ChangeBirthDate(DateOnly? birth)
     {
-        if (birth is not null)
+        if (birth is not null && birth.Value != BirthDate.Value)
             BirthDate = new BirthDate(birth.Value);
     }
 
