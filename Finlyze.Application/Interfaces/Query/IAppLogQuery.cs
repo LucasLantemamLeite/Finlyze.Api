@@ -5,6 +5,6 @@ namespace Finlyze.Application.Abstract.Interface;
 public interface IAppLogQuery
 {
     Task<AppLog?> GetByIdAsync(Guid id);
-    Task<IEnumerable<AppLog?>> GeyByTypeAsync(int type);
-    Task<IEnumerable<AppLog?>> GetByCreateAtAsync(DateTime create);
+    Task<IEnumerable<AppLog>> GetByTypeAsync(int type);
+    Task<IEnumerable<AppLog>> GetByCreateAtAsync(DateTime create);
 }
