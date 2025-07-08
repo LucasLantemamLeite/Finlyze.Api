@@ -23,5 +23,15 @@ public class Transaction : Entity
         TransactionUpdateAt = new TransactionUpdateAt();
     }
 
+    public Transaction(Guid id, string title, string? description, decimal amount, int type, DateTime create, DateTime update) : base(id)
+    {
+        TransactionTitle = new TransactionTitle(title);
+        TransactionDescription = new TransactionDescription(description);
+        Amount = new Amount(amount);
+        TypeTransaction = new TypeTransaction(type);
+        TransactionCreateAt = new TransactionCreateAt(create);
+        TransactionUpdateAt = new TransactionUpdateAt(update);
+    }
+
     private Transaction() { }
 }

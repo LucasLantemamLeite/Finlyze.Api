@@ -17,5 +17,13 @@ public class AppLog : Entity
         LogCreateAt = new LogCreateAt();
     }
 
+    public AppLog(Guid id, int log, string title, string description, DateTime create) : base(id)
+    {
+        LogType = new LogType(log);
+        LogTitle = new LogTitle(title);
+        LogDescription = new LogDescription(description);
+        LogCreateAt = new LogCreateAt(create);
+    }
+
     private AppLog() { }
 }
