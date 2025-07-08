@@ -10,6 +10,7 @@ public static class HandlerInjection
         service.AddScoped<ICreateUserAccountHandler, CreateUserAccountHandler>();
         service.AddScoped<IDeleteAccountHandler, DeleteUserAccountHandler>();
         service.AddScoped<ILoginUserAccountHandler, LoginUserAccountHandler>();
+        service.AddScoped<IUpdateUserAccountHandler, UpdateUserAccountHandler>();
 
         return service;
     }
