@@ -2,7 +2,7 @@ using Finlyze.Domain.ValueObject.UserAccountObject;
 
 namespace Finlyze.Domain.Entity;
 
-public class UserAccount : Entity
+public class UserAccount : EntityGuid
 {
     public Name Name { get; private set; }
     public Email Email { get; private set; }
