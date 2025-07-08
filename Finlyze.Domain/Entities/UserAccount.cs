@@ -38,6 +38,12 @@ public class UserAccount : Entity
             PhoneNumber = new PhoneNumber(phone);
     }
 
+    public void ChangeBirthDate(DateOnly? birth)
+    {
+        if (birth is not null)
+            BirthDate = new BirthDate(birth.Value);
+    }
+
     public UserAccount(string name, string email, string password, string phone, DateOnly birth, bool active = true, int role = 1)
     {
         Name = new Name(name);
