@@ -4,7 +4,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface IUpdateUserAcconutHandler
+public interface IUpdateUserAccountHandler
 {
     Task<ResultHandler<UserAccount>> Handle(UpdateUserAccountCommand command);
 }
