@@ -37,14 +37,14 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
 
             await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Delete", $"Usuário Id: {existingUser.Id} deletado com sucesso"));
 
-            return ResultHandler<UserAccount>.Ok("Conta deletada com sucesso.", existingUser);
+            return ResultHandler<UserAccount>.Ok("Conta deletada com sucesso.", null);
         }
+
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"DeleteUserAccountHandler -> Handle: {errorMsg}"));
-            return ResultHandler<UserAccount>.Fail($"Erro interno: {errorMsg}");
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"Erro no delete para a o Id: {command.Id} -> {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
-
 }

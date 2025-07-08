@@ -2,6 +2,7 @@ using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Domain.Entity;
 using Finlyze.Domain.ValueObject.Enums;
+using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Application.Abstract.Interface.Handler;
 
@@ -44,13 +45,21 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 
             await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "CreateAdminUserAccount", $"Usuario Admin: {userAccount.Email.Value} criado com sucesso"));
 
-            return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", userAccount);
+            return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", null);
         }
+
+        catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
+        {
+            var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Create", $"Erro na validação ao criar a conta do usuário Administrador: -> {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail(errorMsg);
+        }
+
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdminUserAccount", errorMsg));
-            return ResultHandler<UserAccount>.Fail($"CreateAdminUserAccountHandler -> Handle: {errorMsg}");
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdmin", $"Ocorreu um erro na criação da conta do usuário Administrador: {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

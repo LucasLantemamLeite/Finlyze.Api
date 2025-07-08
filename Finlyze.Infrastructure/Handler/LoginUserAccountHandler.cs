@@ -4,6 +4,7 @@ using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Application.Authentication.Hasher;
 using Finlyze.Domain.Entity;
 using Finlyze.Domain.ValueObject.Enums;
+using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 
@@ -39,11 +40,19 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
 
             return ResultHandler<UserAccount>.Ok("Login realizado com sucesso.", userAccount);
         }
+
+        catch (Exception ex) when (ex is DomainException or EmailRegexException)
+        {
+            var msg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Login", $"Erro de validação ao fazer login Email da conta: {command.Email} -> {msg}"));
+            return ResultHandler<UserAccount>.Fail(msg);
+        }
+
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
             await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Login", $"Exceção no login para o e-mail: {command.Email} -> {errorMsg}"));
-            return ResultHandler<UserAccount>.Fail($"LoginUserAccountHandler -> Handle: {errorMsg}");
+            return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }
