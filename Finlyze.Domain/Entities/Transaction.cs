@@ -2,7 +2,7 @@ using Finlyze.Domain.ValueObject.TransactionObjects;
 
 namespace Finlyze.Domain.Entity;
 
-public class Transaction : Entity
+public class Transaction : EntityInt
 {
     public TransactionTitle TransactionTitle { get; private set; }
     public TransactionDescription? TransactionDescription { get; private set; }
@@ -23,7 +23,7 @@ public class Transaction : Entity
         TransactionUpdateAt = new TransactionUpdateAt();
     }
 
-    public Transaction(Guid id, string title, string? description, decimal amount, int type, DateTime create, DateTime update) : base(id)
+    public Transaction(int id, string title, string? description, decimal amount, int type, DateTime create, DateTime update) : base(id)
     {
         TransactionTitle = new TransactionTitle(title);
         TransactionDescription = new TransactionDescription(description);
