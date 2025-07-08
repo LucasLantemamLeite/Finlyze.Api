@@ -8,6 +8,8 @@ public static class HandlerInjection
     public static IServiceCollection RegisterHandlers(this IServiceCollection service)
     {
         service.AddScoped<ICreateUserAccountHandler, CreateUserAccountHandler>();
+        service.AddScoped<IDeleteAccountHandler, DeleteUserAccountHandler>();
+        service.AddScoped<ILoginUserAccountHandler, LoginUserAccountHandler>();
 
         return service;
     }
