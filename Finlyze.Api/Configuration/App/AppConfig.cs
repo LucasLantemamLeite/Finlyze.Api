@@ -15,6 +15,8 @@ public static class AppConfig
             app.UseSwaggerUI();
         }
 
+        app.UseHealthChecks("/health");
+
         app.MapControllers();
 
         return app;

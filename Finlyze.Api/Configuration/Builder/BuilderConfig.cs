@@ -34,6 +34,8 @@ public static class BuilderConfig
             builder.Services.AddSwaggerGen();
         }
 
+        builder.Services.AddHealthChecks();
+
         builder.Services.AddControllers();
 
         return builder;
