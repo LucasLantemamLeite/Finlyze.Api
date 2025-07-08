@@ -13,6 +13,12 @@ public class TransactionMap : IEntityTypeConfiguration<Transaction>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+            .HasColumnName("Id")
+            .HasColumnType("Int")
+            .UseIdentityColumn()
+            .ValueGeneratedOnAdd();
+
         builder.OwnsOne(x => x.TransactionTitle, title =>
         {
             title.Property(x => x.Value)

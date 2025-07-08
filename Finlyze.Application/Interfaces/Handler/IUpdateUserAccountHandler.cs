@@ -1,10 +1,10 @@
 using Finlyze.Application.Abstract.Interface.Command;
-using Finlyze.Application.Abstract.Interface.Result;
+using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface IUpdateUserAcconutHandler
+public interface IUpdateUserAccountHandler
 {
-    Task<ResultPattern<UserAccount>> Handle(UpdateUserAccountCommand command);
+    Task<ResultHandler<UserAccount>> Handle(UpdateUserAccountCommand command);
 }

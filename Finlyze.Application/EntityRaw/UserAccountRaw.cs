@@ -1,6 +1,6 @@
-namespace Finlyze.Application.Dto;
+namespace Finlyze.Application.Entity.Raw;
 
-public class UserAccountDto
+public class UserAccountRaw
 {
     public Guid Id { get; set; }
     public string Name { get; set; }

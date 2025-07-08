@@ -2,7 +2,7 @@ using Finlyze.Domain.ValueObject.AppLogObjects;
 
 namespace Finlyze.Domain.Entity;
 
-public class AppLog : Entity
+public class AppLog : EntityInt
 {
     public LogType LogType { get; private set; }
     public LogTitle LogTitle { get; private set; }
@@ -15,6 +15,14 @@ public class AppLog : Entity
         LogTitle = new LogTitle(title);
         LogDescription = new LogDescription(description);
         LogCreateAt = new LogCreateAt();
+    }
+
+    public AppLog(int id, int log, string title, string description, DateTime create) : base(id)
+    {
+        LogType = new LogType(log);
+        LogTitle = new LogTitle(title);
+        LogDescription = new LogDescription(description);
+        LogCreateAt = new LogCreateAt(create);
     }
 
     private AppLog() { }

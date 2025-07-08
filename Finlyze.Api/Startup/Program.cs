@@ -7,8 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.RegisterConfig();
 
 builder.Services
-    .RegisterQueries()
     .RegisterRepositories()
+    .RegisterQueries()
+    .RegisterHandlers()
     .RegisterServices(builder.Configuration);
 
 var app = builder.Build();

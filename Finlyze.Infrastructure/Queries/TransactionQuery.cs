@@ -1,101 +1,60 @@
 using System.Data;
 using Dapper;
 using Finlyze.Application.Abstract.Interface;
-using Finlyze.Application.Abstract.Interface.Result;
-using Finlyze.Application.Dto;
+using Finlyze.Domain.Entity;
+using Finlyze.Application.Entity.Raw;
+using Finlyze.Application.Entity.Raw.Convert;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 
 public class TransactionQuery : ITransactionQuery
 {
     private readonly IDbConnection _connection;
-
     public TransactionQuery(IDbConnection connection) => _connection = connection;
+    private const string SqlSelectBase = "SELECT Id, TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId FROM Transaction";
 
-    const string SqlSelectBase = "SELECT Id, TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId FROM Transaction";
-
-    public async Task<ResultPattern<IEnumerable<TransactionDto>>> GetByAmountAsync(decimal amount)
+    public async Task<IEnumerable<Transaction>> GetByAmountAsync(decimal amount)
     {
-        try
-        {
-            var sql = $"{SqlSelectBase} WHERE Amount = @Amount";
-            var transactions = await _connection.QueryAsync<TransactionDto>(sql, new { Amount = amount });
+        var sql = $"{SqlSelectBase} WHERE Amount = @Amount";
+        var parameters = new { Amount = amount };
+        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
 
-            return ResultPattern<IEnumerable<TransactionDto>>.Ok(null, transactions);
-        }
-
-        catch (Exception e)
-        {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<IEnumerable<TransactionDto>>.Fail($"Infrastructure -> TransactionQuery -> GetByAmountAsync: {errorMsg}");
-        }
+        return raw.ToEnumerableTransaction();
     }
 
-    public async Task<ResultPattern<IEnumerable<TransactionDto>>> GetByCreateAtAsync(DateTime create_date)
+    public async Task<IEnumerable<Transaction>> GetByCreateAtAsync(DateTime create_date)
     {
-        try
-        {
-            var sql = $"{SqlSelectBase} WHERE TransactionCreateAt = @TransactionCreateAt";
-            var transactions = await _connection.QueryAsync<TransactionDto>(sql, new { TransactionCreateAt = create_date });
+        var sql = $"{SqlSelectBase} WHERE TransactionCreateAt = @TransactionCreateAt";
+        var parameters = new { TransactionCreateAt = create_date };
+        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
 
-            return ResultPattern<IEnumerable<TransactionDto>>.Ok(null, transactions);
-        }
-
-        catch (Exception e)
-        {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<IEnumerable<TransactionDto>>.Fail($"Infrastructure -> TransactionQuery -> GetByCreateAtAsync: {errorMsg}");
-        }
+        return raw.ToEnumerableTransaction();
     }
 
-    public async Task<ResultPattern<TransactionDto>> GetByIdAsync(Guid id)
+    public async Task<Transaction?> GetByIdAsync(int id)
     {
-        try
-        {
-            var sql = $"{SqlSelectBase} WHERE Id = @Id";
-            var transaction = await _connection.QuerySingleOrDefaultAsync<TransactionDto>(sql, new { Id = id });
+        var sql = $"{SqlSelectBase} WHERE Id = @Id";
+        var parameters = new { Id = id };
+        var raw = await _connection.QuerySingleOrDefaultAsync<TransactionRaw>(sql, parameters);
 
-            return ResultPattern<TransactionDto>.Ok(null, transaction);
-        }
-
-        catch (Exception e)
-        {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<TransactionDto>.Fail($"Infrastructure -> TransactionQuery -> GetByIdAsync: {errorMsg}");
-        }
+        return raw == null ? null : raw.ToSingleTransaction();
     }
 
-    public async Task<ResultPattern<IEnumerable<TransactionDto>>> GetByTitleAsync(string title)
+    public async Task<IEnumerable<Transaction>> GetByTitleAsync(string title)
     {
-        try
-        {
-            var sql = $"{SqlSelectBase} WHERE TransactionTitle = @TransactionTitle";
-            var transactions = await _connection.QueryAsync<TransactionDto>(sql, new { TransactionTitle = title });
+        var sql = $"{SqlSelectBase} WHERE TransactionTitle = @TransactionTitle";
+        var parameters = new { TransactionTitle = title };
+        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
 
-            return ResultPattern<IEnumerable<TransactionDto>>.Ok(null, transactions);
-        }
-
-        catch (Exception e)
-        {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<IEnumerable<TransactionDto>>.Fail($"Infrastructure -> TransactionQuery -> GetByTitleAsync: {errorMsg}");
-        }
+        return raw.ToEnumerableTransaction();
     }
 
-    public async Task<ResultPattern<IEnumerable<TransactionDto>>> GetByTypeAsync(int type)
+    public async Task<IEnumerable<Transaction>> GetByTypeAsync(int type)
     {
-        try
-        {
-            var sql = $"{SqlSelectBase} WHERE TypeTransaction = @TypeTransaction";
-            var transactions = await _connection.QueryAsync<TransactionDto>(sql, new { TypeTransaction = type });
+        var sql = $"{SqlSelectBase} WHERE TypeTransaction = @TypeTransaction";
+        var parameters = new { TypeTransaction = type };
+        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
 
-            return ResultPattern<IEnumerable<TransactionDto>>.Ok(null, transactions);
-        }
-
-        catch (Exception e)
-        {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            return ResultPattern<IEnumerable<TransactionDto>>.Fail($"Infrastructure -> TransactionQuery -> GetByTypeAsync: {errorMsg}");
-        }
+        return raw.ToEnumerableTransaction();
     }
 }

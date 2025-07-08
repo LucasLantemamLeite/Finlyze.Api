@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Finlyze.Migrations.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250626235122_InitialDeploy")]
-    partial class InitialDeploy
+    [Migration("20250708215935_Troca da coluna de Id de Guid para Int")]
+    partial class TrocadacolunadeIddeGuidparaInt
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,12 @@ namespace Finlyze.Migrations.Migrations
 
             modelBuilder.Entity("Finlyze.Domain.Entity.AppLog", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("Int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.HasKey("Id");
 
@@ -38,9 +41,12 @@ namespace Finlyze.Migrations.Migrations
 
             modelBuilder.Entity("Finlyze.Domain.Entity.Transaction", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("Int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<Guid>("UserAccountId")
                         .HasColumnType("uniqueidentifier")
@@ -68,8 +74,8 @@ namespace Finlyze.Migrations.Migrations
                 {
                     b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogCreateAt", "LogCreateAt", b1 =>
                         {
-                            b1.Property<Guid>("AppLogId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("AppLogId")
+                                .HasColumnType("Int");
 
                             b1.Property<DateTime>("Value")
                                 .HasColumnType("DateTime")
@@ -85,8 +91,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogDescription", "LogDescription", b1 =>
                         {
-                            b1.Property<Guid>("AppLogId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("AppLogId")
+                                .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -103,8 +109,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogTitle", "LogTitle", b1 =>
                         {
-                            b1.Property<Guid>("AppLogId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("AppLogId")
+                                .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -121,8 +127,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogType", "LogType", b1 =>
                         {
-                            b1.Property<Guid>("AppLogId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("AppLogId")
+                                .HasColumnType("Int");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("Int")
@@ -159,8 +165,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.Amount", "Amount", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<decimal>("Value")
                                 .HasColumnType("decimal(18,2)")
@@ -176,8 +182,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionCreateAt", "TransactionCreateAt", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<DateTime>("Value")
                                 .HasColumnType("DateTime")
@@ -193,8 +199,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionDescription", "TransactionDescription", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .HasColumnType("Nvarchar(300)")
@@ -210,8 +216,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionTitle", "TransactionTitle", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -228,8 +234,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionUpdateAt", "TransactionUpdateAt", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<DateTime>("Value")
                                 .HasColumnType("DateTime")
@@ -245,8 +251,8 @@ namespace Finlyze.Migrations.Migrations
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TypeTransaction", "TypeTransaction", b1 =>
                         {
-                            b1.Property<Guid>("TransactionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("TransactionId")
+                                .HasColumnType("Int");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("Int")
