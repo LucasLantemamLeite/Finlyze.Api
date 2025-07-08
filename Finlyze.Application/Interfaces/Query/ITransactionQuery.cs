@@ -1,10 +1,10 @@
-using System.Transactions;
+using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
 public interface ITransactionQuery
 {
-    Task<Transaction> GetByIdAsync(Guid id);
+    Task<Transaction?> GetByIdAsync(Guid id);
     Task<IEnumerable<Transaction>> GetByTitleAsync(string title);
     Task<IEnumerable<Transaction>> GetByTypeAsync(int type);
     Task<IEnumerable<Transaction>> GetByCreateAtAsync(DateTime create_date);
