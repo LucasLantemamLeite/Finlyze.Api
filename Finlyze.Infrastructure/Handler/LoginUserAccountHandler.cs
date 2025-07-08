@@ -1,6 +1,6 @@
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
-using Finlyze.Application.Abstract.Interface.Result;
+using Finlyze.Application.Abstract.Interface.Handler.Result;
 using Finlyze.Application.Authentication.Hasher;
 using Finlyze.Domain.Entity;
 
@@ -18,26 +18,30 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
         _appRepository = appRepository;
     }
 
-    public async Task<ResultPattern<UserAccount>> Handle(LoginUserAccountCommand command)
+    public async Task<ResultHandler<UserAccount>> Handle(LoginUserAccountCommand command)
     {
         try
         {
-            var result = await _userQuery.GetByEmailAsync(command.Email);
+            var userAccount = await _userQuery.GetByEmailAsync(command.Email);
 
-            if (result.Data == null || !result.Data.Password.Value.VerifyHash(command.Password))
-                return ResultPattern<UserAccount>.Fail("Credenciais incorretas.");
+            if (userAccount == null || !userAccount.Password.Value.VerifyHash(command.Password))
+            {
+                var appLogError = new AppLog(3, "Login", "Falha ao realizar login");
+                await _appRepository.CreateAsync(appLogError);
+                return ResultHandler<UserAccount>.Fail("Credenciais incorretas.");
+            }
 
-            var appLog = new AppLog(1, "Login do Usuário", "Realizado com sucesso.");
-            await _appRepository.CreateAsync(appLog);
-            return ResultPattern<UserAccount>.Ok(null, result.Data);
+            var appLogSucess = new AppLog(1, "Login", $"Login realizado com sucesso");
+            await _appRepository.CreateAsync(appLogSucess);
+
+            return ResultHandler<UserAccount>.Ok("Login realizado com sucesso.", userAccount);
         }
-
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido na camada do Handler.";
-            var appLogException = new AppLog(3, $"Exeção do Handle de DeleteUserAccountHandler", errorMsg);
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
+            var appLogException = new AppLog(3, "Login", $"{errorMsg}");
             await _appRepository.CreateAsync(appLogException);
-            return ResultPattern<UserAccount>.Fail($"Handler -> LoginUserAccountHandler -> Handle: {errorMsg}");
+            return ResultHandler<UserAccount>.Fail($"LoginUserAccountHandler -> Handle: {errorMsg}");
         }
     }
 }
