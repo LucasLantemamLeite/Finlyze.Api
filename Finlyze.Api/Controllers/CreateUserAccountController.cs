@@ -2,6 +2,7 @@ using Finlyze.Api.Services.TokenHandler;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Finlyze.Api.Controller.UserAccount;
@@ -15,6 +16,7 @@ public class CreateUserAccountController : ControllerBase
     public CreateUserAccountController(ICreateUserAccountHandler handler) => _handler = handler;
 
     [HttpPost("users")]
+    [AllowAnonymous]
     public async Task<IActionResult> CreateAsync([FromBody] CreateUserAccountDto user_dto)
     {
         try
