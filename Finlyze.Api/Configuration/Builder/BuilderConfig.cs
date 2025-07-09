@@ -1,5 +1,7 @@
+using System.Security.Claims;
 using System.Text;
 using Finlyze.Api.Services.Jwt;
+using Finlyze.Domain.ValueObject.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -25,7 +27,23 @@ public static class BuilderConfig
             };
         });
 
-        builder.Services.AddAuthorization();
+        builder.Services.AddAuthorization(options =>
+        {
+            options.AddPolicy("AdminOnly", policy =>
+            policy.RequireAssertion(context =>
+            {
+                var roleClaim = context.User.FindFirst(ClaimTypes.Role);
+
+                if (roleClaim is null || !int.TryParse(roleClaim.Value, out var rolesAsInt))
+                    return false;
+
+                var roles = (ERole)rolesAsInt;
+
+                return roles.HasFlag(ERole.User) && roles.HasFlag(ERole.Admin);
+            }));
+        });
+
+
         builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
 
         if (builder.Environment.IsDevelopment())
