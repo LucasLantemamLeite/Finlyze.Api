@@ -15,7 +15,7 @@ public class CreateAdminUserAccountController : ControllerBase
     private readonly ICreateAdminUserAccountHandler _handler;
     public CreateAdminUserAccountController(ICreateAdminUserAccountHandler handler) => _handler = handler;
 
-    [Authorize]
+    [Authorize(Policy = "AdminOnly")]
     [HttpPost("users-admin")]
     public async Task<IActionResult> CreateAsync([FromBody] CreateUserAccountDto user_dto)
     {
