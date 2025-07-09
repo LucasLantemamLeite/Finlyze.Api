@@ -33,7 +33,7 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
             if (existingPhone is not null)
                 return ResultHandler<UserAccount>.Fail("PhoneNumber já está em uso.");
 
-            var userAccount = new UserAccount(command.Name, command.Email, command.Password, command.PhoneNumber, command.BirthDate, true, 2);
+            var userAccount = new UserAccount(command.Name, command.Email, command.Password, command.PhoneNumber, command.BirthDate, true, (int)(ERole.User | ERole.Admin));
 
             var row = await _userRepository.CreateAsync(userAccount);
 
