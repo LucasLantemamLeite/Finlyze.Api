@@ -1,8 +1,8 @@
 namespace Finlyze.Domain.ValueObject.Enums;
 
-[Flags]
+
 public enum ERole
 {
-    User = 1 << 0,
-    Admin = 1 << 1
+    User = 1,
+    Admin = 2
 }
