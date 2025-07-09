@@ -21,7 +21,7 @@ public class JwtTokenHandler
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.GivenName, user.Name.Value),
                 new Claim("Active", user.Active.Value.ToString()),
-                new Claim(ClaimTypes.Role, user.Role.Value.ToString())
+               new Claim(ClaimTypes.Role, ((int)user.Role.Value).ToString())
             ]),
 
             SigningCredentials = credencials,
