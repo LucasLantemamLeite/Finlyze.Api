@@ -1,3 +1,4 @@
+using Finlyze.Domain.ValueObject.Enums;
 using Finlyze.Domain.ValueObject.UserAccountObject;
 using Finlyze.Domain.ValueObject.Validation;
 
@@ -118,7 +119,6 @@ public class UserAccountTest
 
     [Theory]
     [InlineData("+")]
-    [InlineData("+")]
     [InlineData("")]
     public static void Dado_Um_PhoneNumber_Sem_Digítos_Lança_Exceção(string phone)
     {
@@ -188,12 +188,13 @@ public class UserAccountTest
     }
 
     [Theory]
-    [InlineData(3)]
     [InlineData(4)]
+    [InlineData(5)]
+    [InlineData(6)]
     [InlineData(-1)]
     public static void Dado_Um_Role_Inválido_Lança_Exceção(int role)
     {
-        var ex = Assert.Throws<EnumException>(() => new Role(role));
+        var ex = Assert.Throws<EnumFlagsException>(() => new Role(role));
         Assert.NotNull(ex);
         Assert.Equal("Role Inválido.", ex.Message);
     }
