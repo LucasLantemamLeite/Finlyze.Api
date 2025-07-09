@@ -9,7 +9,7 @@ public class Role : ValueObject
 
     public Role(int role)
     {
-        EnumException.ThrowIfNotDefined<ERole>(role, "Role Inválido.");
+        EnumFlagsException.ThrowIfNotFlagDefined<ERole>(role, "Role Inválido.");
         Value = (ERole)role;
     }
 
