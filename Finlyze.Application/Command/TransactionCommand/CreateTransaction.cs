@@ -7,15 +7,15 @@ public class CreateTransactionCommand
     public decimal Amount { get; set; }
     public int TypeTransaction { get; set; }
     public DateTime TransactionCreateAt { get; set; }
-    public Guid UserAccount { get; set; }
+    public Guid UserAccountId { get; set; }
 
-    public CreateTransactionCommand(string title, string? description, decimal amount, int type, DateTime create, Guid userAccount)
+    public CreateTransactionCommand(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
         TransactionTitle = title;
         TransactionDescription = description;
         Amount = amount;
         TypeTransaction = type;
         TransactionCreateAt = create;
-        UserAccount = userAccount;
+        UserAccountId = userAccountId;
     }
 }
