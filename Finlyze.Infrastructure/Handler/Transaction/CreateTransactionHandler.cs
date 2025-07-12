@@ -27,18 +27,19 @@ public class CreateTransactionHandler : ICreateTransactionHandler
         {
             var existingUser = await _userQuery.GetByIdAsync(command.UserAccountId);
 
-            if (existingUser is not null)
+            if (existingUser is null)
                 return ResultHandler<Transaction>.Fail("Usuário com esse Id não encontrado.");
 
-            var transaction = new Transaction(command.TransactionTitle, command.TransactionDescription, command.Amount, command.TypeTransaction, command.TransactionCreateAt);
+            var transaction = new Transaction(command.TransactionTitle, command.TransactionDescription, command.Amount, command.TypeTransaction, command.TransactionCreateAt, command.UserAccountId);
             var row = await _transRepository.CreateAsync(transaction);
 
             if (row == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "", ""));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Create", "Falha ao criar transação do usuário"));
                 return ResultHandler<Transaction>.Fail("Falha ao criar a Transação do usuário.");
             }
 
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction: {transaction.Id} criado com sucesso"));
             return ResultHandler<Transaction>.Ok("Transação criado com sucesso.", transaction);
         }
 
