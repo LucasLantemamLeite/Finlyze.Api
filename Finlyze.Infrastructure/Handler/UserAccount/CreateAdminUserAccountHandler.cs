@@ -39,11 +39,11 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 
             if (row == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdminUserAccount", "Não foi possível criar essa conta do usuário Administrador"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdmin", "Não foi possível criar essa conta do usuário Administrador"));
                 return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "CreateAdminUserAccount", $"Usuario Admin: {userAccount.Email.Value} criado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "CreateAdmin", $"Usuario Admin: {userAccount.Email.Value} criado com sucesso"));
 
             return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", null);
         }
