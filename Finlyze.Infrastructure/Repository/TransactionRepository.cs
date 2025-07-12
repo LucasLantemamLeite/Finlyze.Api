@@ -12,7 +12,7 @@ public class TransactionRepository : ITransactionRepository
     public async Task<int> CreateAsync(Transaction transaction)
     {
 
-        var sql = @"INSERT INTO Transaction
+        var sql = @"INSERT INTO [Transaction]
         (TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId)
         VALUES
         (@TransactionTitle, @TransactionDescription, @Amount, @TypeTransaction, @TransactionCreateAt, @TransactionUpdateAt, @UserAccountId)";
@@ -33,14 +33,14 @@ public class TransactionRepository : ITransactionRepository
 
     public async Task<int> DeleteAsync(Transaction transaction)
     {
-        var sql = @"DELETE FROM Transaction WHERE Id = @Id";
+        var sql = @"DELETE FROM [Transaction] WHERE Id = @Id";
         var parameters = new { Id = transaction.Id };
         return await _connection.ExecuteAsync(sql, parameters);
     }
 
     public async Task<int> UpdateAsync(Transaction transaction)
     {
-        var sql = @"UPDATE Transaction SET TransactionTitle = @TransactionTitle, TransactionDescription = @TransactionDescription, Amount = @Amount, TypeTransaction = @TypeTransaction, TransactionCreateAt = @TransactionCreateAt, TransactionUpdateAt = @TransactionUpdateAt  WHERE Id = @Id";
+        var sql = @"UPDATE [Transaction] SET TransactionTitle = @TransactionTitle, TransactionDescription = @TransactionDescription, Amount = @Amount, TypeTransaction = @TypeTransaction, TransactionCreateAt = @TransactionCreateAt, TransactionUpdateAt = @TransactionUpdateAt  WHERE Id = @Id";
 
         var parameters = new
         {
