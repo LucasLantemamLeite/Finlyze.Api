@@ -3,6 +3,7 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
 using Finlyze.Application.Authentication.Hasher;
+using Finlyze.Domain.ValueObject.UserAccountObject;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
@@ -43,7 +44,7 @@ public class UserAccountRepository : IUserAccountRepository
 
     public async Task<int> UpdateAsync(UserAccount user)
     {
-        var sql = @"UPDATE UserAccount SET Name = @Name, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber WHERE Id = @Id";
+        var sql = @"UPDATE UserAccount SET Name = @Name, Email = @Email, Password = @Password, PhoneNumber = @PhoneNumber, BirthDate = @BirthDate WHERE Id = @Id";
 
         var parameters = new
         {
@@ -51,7 +52,8 @@ public class UserAccountRepository : IUserAccountRepository
             Name = user.Name.Value,
             Email = user.Email.Value,
             Password = user.Password.Value.GenerateHash(),
-            PhoneNumber = user.PhoneNumber.Value
+            PhoneNumber = user.PhoneNumber.Value,
+            BirthDate = user.BirthDate.Value.ToDateTime(TimeOnly.MinValue)
         };
 
         return await _connection.ExecuteAsync(sql, parameters);
