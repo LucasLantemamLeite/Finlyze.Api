@@ -13,7 +13,7 @@ public class Transaction : EntityInt
     public Guid UserAccountId { get; private set; }
     public UserAccount UserAccount { get; set; }
 
-    public Transaction(string title, string? description, decimal amount, int type, DateTime create)
+    public Transaction(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
         TransactionTitle = new TransactionTitle(title);
         TransactionDescription = new TransactionDescription(description);
@@ -21,9 +21,10 @@ public class Transaction : EntityInt
         TypeTransaction = new TypeTransaction(type);
         TransactionCreateAt = new TransactionCreateAt(create);
         TransactionUpdateAt = new TransactionUpdateAt();
+        UserAccountId = userAccountId;
     }
 
-    public Transaction(int id, string title, string? description, decimal amount, int type, DateTime create, DateTime update) : base(id)
+    public Transaction(int id, string title, string? description, decimal amount, int type, DateTime create, DateTime update, Guid userAccountId) : base(id)
     {
         TransactionTitle = new TransactionTitle(title);
         TransactionDescription = new TransactionDescription(description);
@@ -31,6 +32,7 @@ public class Transaction : EntityInt
         TypeTransaction = new TypeTransaction(type);
         TransactionCreateAt = new TransactionCreateAt(create);
         TransactionUpdateAt = new TransactionUpdateAt(update);
+        UserAccountId = userAccountId;
     }
 
     private Transaction() { }
