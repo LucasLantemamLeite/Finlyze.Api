@@ -22,7 +22,7 @@ public class CreateUserAccountController : ControllerBase
         try
         {
             if (!ModelState.IsValid)
-                return ValidationProblem(ModelState);
+                return BadRequest(ModelState);
 
             var command = new CreateUserAccountCommand(user_dto.Name, user_dto.Email, user_dto.Password, user_dto.PhoneNumber, user_dto.BirthDate);
             var result = await _handler.Handle(command);

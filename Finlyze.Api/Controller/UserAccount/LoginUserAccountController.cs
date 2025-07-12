@@ -22,7 +22,7 @@ public class LoginUserAccountController : ControllerBase
         try
         {
             if (!ModelState.IsValid)
-                return ValidationProblem(ModelState);
+                return BadRequest(ModelState);
 
             var command = new LoginUserAccountCommand(login_dto.Email, login_dto.Password);
             var result = await _handler.Handle(command);

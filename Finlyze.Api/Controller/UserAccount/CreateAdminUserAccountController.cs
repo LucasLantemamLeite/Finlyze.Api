@@ -22,7 +22,7 @@ public class CreateAdminUserAccountController : ControllerBase
         try
         {
             if (!ModelState.IsValid)
-                return ValidationProblem(ModelState);
+                return BadRequest(ModelState);
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
