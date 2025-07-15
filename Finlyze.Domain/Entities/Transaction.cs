@@ -13,10 +13,7 @@ public class Transaction : EntityInt
     public Guid UserAccountId { get; private set; }
     public UserAccount UserAccount { get; set; }
 
-    public void ChangeId(int id)
-    {
-        Id = id;
-    }
+    public void ChangeId(int id) => Id = id;
 
     public Transaction(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
