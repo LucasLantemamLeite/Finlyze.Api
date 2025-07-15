@@ -3,5 +3,7 @@ namespace Finlyze.Application.Abstract.Interface.Command;
 public class DeleteTransactionCommand
 
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
+
+    public DeleteTransactionCommand(int id) => Id = id;
 }
