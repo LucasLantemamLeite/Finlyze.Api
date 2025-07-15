@@ -1,4 +1,5 @@
 using System.Data;
+using System.Data.Common;
 using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
@@ -11,11 +12,11 @@ public class TransactionRepository : ITransactionRepository
     public TransactionRepository(IDbConnection connection) => _connection = connection;
     public async Task<int> CreateAsync(Transaction transaction)
     {
-
         var sql = @"INSERT INTO [Transaction]
         (TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId)
         VALUES
-        (@TransactionTitle, @TransactionDescription, @Amount, @TypeTransaction, @TransactionCreateAt, @TransactionUpdateAt, @UserAccountId)";
+        (@TransactionTitle, @TransactionDescription, @Amount, @TypeTransaction, @TransactionCreateAt, @TransactionUpdateAt, @UserAccountId)
+        SELECT CAST(SCOPE_IDENTITY() AS INT);";
 
         var parameters = new
         {
@@ -28,7 +29,9 @@ public class TransactionRepository : ITransactionRepository
             UserAccountId = transaction.UserAccountId
         };
 
-        return await _connection.ExecuteAsync(sql, parameters);
+        var id = await _connection.ExecuteScalarAsync<int>(sql, parameters);
+
+        return id;
     }
 
     public async Task<int> DeleteAsync(Transaction transaction)
