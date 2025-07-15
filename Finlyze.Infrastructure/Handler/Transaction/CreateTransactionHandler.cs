@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Abstract.Interface.Handler;
@@ -31,13 +32,9 @@ public class CreateTransactionHandler : ICreateTransactionHandler
                 return ResultHandler<Transaction>.Fail("Usuário com esse Id não encontrado.");
 
             var transaction = new Transaction(command.TransactionTitle, command.TransactionDescription, command.Amount, command.TypeTransaction, command.TransactionCreateAt, command.UserAccountId);
-            var row = await _transRepository.CreateAsync(transaction);
+            var id = await _transRepository.CreateAsync(transaction);
 
-            if (row == 0)
-            {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Create", "Falha ao criar transação do usuário"));
-                return ResultHandler<Transaction>.Fail("Falha ao criar a Transação do usuário.");
-            }
+            transaction.ChangeId(id);
 
             await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction: {transaction.Id} criado com sucesso"));
             return ResultHandler<Transaction>.Ok("Transação criado com sucesso.", transaction);
