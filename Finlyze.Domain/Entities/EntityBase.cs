@@ -2,7 +2,7 @@ namespace Finlyze.Domain.Entity;
 
 public abstract class EntityGuid
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; protected set; }
 
     public EntityGuid()
     {
@@ -17,7 +17,7 @@ public abstract class EntityGuid
 
 public abstract class EntityInt
 {
-    public int Id { get; set; }
+    public int Id { get; protected set; }
     public EntityInt() { }
 
     public EntityInt(int id)
