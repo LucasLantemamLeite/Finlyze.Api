@@ -40,11 +40,11 @@ public class CreateUserAccountHandler : ICreateUserAccountHandler
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Create", $"Falha ao criar conta para o email: {command.Email}"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar conta do usuário com email '{command.Email}'"));
                 return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Create", $"Usuário com email '{userAccount.Email.Value}' criado com sucesso."));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta do usuário com email '{userAccount.Email.Value}' criado com sucesso."));
 
             return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", userAccount);
         }
@@ -52,14 +52,14 @@ public class CreateUserAccountHandler : ICreateUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Create", $"Erro na validação ao criar a conta do usuário: -> {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro na validação ao criar a conta do usuário com email '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Create", $"Ocorreu um erro na criação da conta do usuário: {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar conta do usuário com email '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

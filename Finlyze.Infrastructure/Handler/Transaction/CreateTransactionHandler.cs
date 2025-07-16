@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Abstract.Interface.Handler;
@@ -36,21 +35,22 @@ public class CreateTransactionHandler : ICreateTransactionHandler
 
             transaction.ChangeId(id);
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction: {transaction.Id} criado com sucesso"));
-            return ResultHandler<Transaction>.Ok("Transação criado com sucesso.", transaction);
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction com o Id '{transaction.Id}' criado com sucesso"));
+
+            return ResultHandler<Transaction>.Ok("Transaction criado com sucesso.", transaction);
         }
 
         catch (Exception ex) when (ex is DomainException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Create", $"Erro na validação ao criar a transaction do usuário: -> {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Erro na validação ao criar a Transaction do usuário: {errorMsg}"));
             return ResultHandler<Transaction>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Create", $"Ocorreu um erro na criar a transaction do usuário: {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro na criar a Transaction do usuário com Id '{command.UserAccountId}': {errorMsg}"));
             return ResultHandler<Transaction>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

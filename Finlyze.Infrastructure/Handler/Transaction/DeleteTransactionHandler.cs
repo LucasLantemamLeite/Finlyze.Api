@@ -27,17 +27,17 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
             var transaction = await _tranQuery.GetByIdAsync(command.Id);
 
             if (transaction is null)
-                return ResultHandler<Transaction>.Fail("Nenhuma Transaction encontrada com esse Id.");
+                return ResultHandler<Transaction>.Fail("Transaction com esse Id não encontrado.");
 
             var rows = await _tranRepository.DeleteAsync(transaction);
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", "Não foi possível deletar essa Transaction"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao deletar Transaction da conta de usuário com Id '{transaction.UserAccountId}'"));
                 return ResultHandler<Transaction>.Fail("Falha ao deletar Transaction.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Delete", $"Transaction com Id: {transaction.Id} deletado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction com Id '{transaction.Id}' deletado com sucesso"));
 
             return ResultHandler<Transaction>.Ok("Transaction deletada com sucesso.", null);
         }
@@ -45,7 +45,7 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"Ocorreu um erro ao deletar uma transaction do usuário: {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao deletar a Transaction do usuário com Id '{command.Id}': {errorMsg}"));
             return ResultHandler<Transaction>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

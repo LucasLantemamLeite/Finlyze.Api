@@ -39,11 +39,11 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 
             if (row == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdmin", "Não foi possível criar essa conta do usuário Administrador"));
-                return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário.");
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar essa conta de administrador com email '{command.Email}'"));
+                return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário administrador.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "CreateAdmin", $"Usuario Admin: {userAccount.Email.Value} criado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta de administrador '{userAccount.Email.Value}' criado com sucesso"));
 
             return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", null);
         }
@@ -51,14 +51,14 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Create", $"Erro na validação ao criar a conta do usuário Administrador: -> {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro na validação ao criar a conta de administrador com email '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "CreateAdmin", $"Ocorreu um erro na criação da conta do usuário Administrador: {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar a conta de administrador com email '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

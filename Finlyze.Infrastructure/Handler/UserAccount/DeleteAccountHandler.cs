@@ -25,17 +25,17 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
             var existingUser = await _userQuery.GetByIdAsync(command.Id);
 
             if (existingUser is null)
-                return ResultHandler<UserAccount>.Fail("Conta não encontrada.");
+                return ResultHandler<UserAccount>.Fail("Usuário não encontrada.");
 
             var row = await _userRepository.DeleteAsync(existingUser);
 
             if (row == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"Falha ao deletar usuário Id: {existingUser.Id}"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao deletar conta do usuário do Id '{existingUser.Id}'"));
                 return ResultHandler<UserAccount>.Fail("Falha ao deletar conta do usuário.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Delete", $"Usuário Id: {existingUser.Id} deletado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta do usuário do Id '{existingUser.Id}' deletado com sucesso"));
 
             return ResultHandler<UserAccount>.Ok("Conta deletada com sucesso.", null);
         }
@@ -43,7 +43,7 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Delete", $"Erro no delete para a o Id: {command.Id} -> {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao deletar a conta de usuário do Id '{command.Id}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
