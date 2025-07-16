@@ -27,26 +27,29 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
             var transaction = await _tranQuery.GetByIdAsync(command.Id);
 
             if (transaction is null)
-                return ResultHandler<Transaction>.Fail("Transaction com esse Id não encontrado.");
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "Transaction", $"Não foi possível deletar a transação: ID '{command.Id}' não encontrado."));
+                return ResultHandler<Transaction>.Fail("Transação com esse ID não foi encontrada.");
+            }
 
             var rows = await _tranRepository.DeleteAsync(transaction);
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao deletar Transaction da conta de usuário com Id '{transaction.UserAccountId}'"));
-                return ResultHandler<Transaction>.Fail("Falha ao deletar Transaction.");
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Falha ao deletar transação: ID '{transaction.Id}' do usuário '{transaction.UserAccountId}'."));
+                return ResultHandler<Transaction>.Fail("Falha ao deletar transação.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction com Id '{transaction.Id}' deletado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transação deletada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
-            return ResultHandler<Transaction>.Ok("Transaction deletada com sucesso.", null);
+            return ResultHandler<Transaction>.Ok("Transação deletada com sucesso.", null);
         }
 
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao deletar a Transaction do usuário com Id '{command.Id}': {errorMsg}"));
-            return ResultHandler<Transaction>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro inesperado ao deletar transação com ID '{command.Id}': {errorMsg}"));
+            return ResultHandler<Transaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Command;
 using Finlyze.Application.Abstract.Interface.Handler;
@@ -29,7 +28,10 @@ public class UpdateTransactionHandler : IUpdateTransactionHandler
             var transaction = await _tranQuery.GetByIdAsync(command.Id);
 
             if (transaction is null)
-                return ResultHandler<Transaction>.Fail("Transaction com esse Id não encontrado.");
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "Transaction", $"Não foi possível atualizar a transação: ID '{command.Id}' não encontrado."));
+                return ResultHandler<Transaction>.Fail("Transação com esse ID não foi encontrada.");
+            }
 
             transaction.ChangeTitle(command.TransactionTitle);
             transaction.ChangeDescription(command.TransactionDescription);
@@ -41,27 +43,27 @@ public class UpdateTransactionHandler : IUpdateTransactionHandler
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao atualizar Transaction da conta de usuário com Id '{transaction.UserAccountId}'"));
-                return ResultHandler<Transaction>.Fail("Falha ao atualizar a Transaction");
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Falha ao atualizar transação: ID '{transaction.Id}' do usuário '{transaction.UserAccountId}'."));
+                return ResultHandler<Transaction>.Fail("Falha ao atualizar a transação.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction do Id '{transaction.Id}' atualizado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transação atualizada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
-            return ResultHandler<Transaction>.Ok("Transaction Atualizada com sucesso.", null);
+            return ResultHandler<Transaction>.Ok("Transação atualizada com sucesso.", null);
         }
 
         catch (Exception ex) when (ex is DomainException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Erro de validação ao atualizar Transaction do usuário do Id '{command.Id}': {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Erro de validação ao atualizar transação com ID '{command.Id}': {errorMsg}"));
             return ResultHandler<Transaction>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro ao atualizar a Transaction do usuário do Id '{command.Id}': {errorMsg}"));
-            return ResultHandler<Transaction>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro inesperado ao atualizar transação com ID '{command.Id}': {errorMsg}"));
+            return ResultHandler<Transaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

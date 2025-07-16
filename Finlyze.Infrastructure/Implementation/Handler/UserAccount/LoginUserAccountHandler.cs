@@ -27,11 +27,11 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
 
             if (userAccount is null || !userAccount.Password.Value.VerifyHash(command.Password))
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao fazer login na conta com email '{command.Email}': Credencias incorretas"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha no login: credenciais inválidas para o e-mail '{command.Email}'."));
                 return ResultHandler<UserAccount>.Fail("Credenciais incorretas.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Login realizado com sucesso na conta de usuário com email '{command.Email}'"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Login bem-sucedido: usuário com e-mail '{command.Email}'."));
 
             return ResultHandler<UserAccount>.Ok("Login realizado com sucesso.", userAccount);
         }
@@ -39,15 +39,15 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao fazer login na conta do usuário com email '{command.Email}': {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação no login com e-mail '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao fazer login na conta com email '{command.Email}': {errorMsg}"));
-            return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao fazer login com e-mail '{command.Email}': {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

@@ -28,30 +28,34 @@ public class CreateTransactionHandler : ICreateTransactionHandler
             var existingUser = await _userQuery.GetByIdAsync(command.UserAccountId);
 
             if (existingUser is null)
-                return ResultHandler<Transaction>.Fail("Usuário com esse Id não encontrado.");
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "Transaction", $"Falha ao criar transação: usuário com ID '{command.UserAccountId}' não encontrado."));
+                return ResultHandler<Transaction>.Fail("Usuário com esse ID não foi encontrado.");
+            }
 
             var transaction = new Transaction(command.TransactionTitle, command.TransactionDescription, command.Amount, command.TypeTransaction, command.TransactionCreateAt, command.UserAccountId);
-            var id = await _transRepository.CreateAsync(transaction);
+
+            var id = await _transRepository.UpdateAsync(transaction);
 
             transaction.ChangeId(id);
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transaction com o Id '{transaction.Id}' criado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transação criada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
-            return ResultHandler<Transaction>.Ok("Transaction criado com sucesso.", transaction);
+            return ResultHandler<Transaction>.Ok("Transação criada com sucesso.", transaction);
         }
 
         catch (Exception ex) when (ex is DomainException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Erro na validação ao criar a Transaction do usuário: {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Falha de validação ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
             return ResultHandler<Transaction>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro na criar a Transaction do usuário com Id '{command.UserAccountId}': {errorMsg}"));
-            return ResultHandler<Transaction>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro inesperado ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
+            return ResultHandler<Transaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

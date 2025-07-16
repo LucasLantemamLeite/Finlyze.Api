@@ -27,7 +27,7 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 
             if (existingEmail is not null)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao criar essa conta do administrador com email '{command.Email}': Email já está em uso"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Não foi possível criar conta de administrador: e-mail '{command.Email}' já está em uso."));
                 return ResultHandler<UserAccount>.Fail("Email já está em uso.");
             }
 
@@ -35,21 +35,21 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
 
             if (existingPhone is not null)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao criar essa conta do administrador com email '{command.Email}': Número de Telefone já está em uso"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Não foi possível criar conta de administrador: telefone '{command.PhoneNumber}' já está em uso."));
                 return ResultHandler<UserAccount>.Fail("PhoneNumber já está em uso.");
             }
 
             var userAccount = new UserAccount(command.Name, command.Email, command.Password, command.PhoneNumber, command.BirthDate, true, (int)(ERole.User | ERole.Admin));
 
-            var row = await _userRepository.CreateAsync(userAccount);
+            var rows = await _userRepository.CreateAsync(userAccount);
 
-            if (row == 0)
+            if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar essa conta de administrador com email '{command.Email}'"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao criar conta de administrador com e-mail '{command.Email}'."));
                 return ResultHandler<UserAccount>.Fail("Falha ao criar conta do usuário administrador.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta de administrador '{userAccount.Email.Value}' criado com sucesso"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta de administrador '{userAccount.Email.Value}' criada com sucesso."));
 
             return ResultHandler<UserAccount>.Ok("Conta criada com sucesso.", null);
         }
@@ -57,15 +57,15 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro na validação ao criar a conta de administrador com email '{command.Email}': {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao criar conta de administrador com e-mail '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
-            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro Desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao criar a conta de administrador com email '{command.Email}': {errorMsg}"));
-            return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao criar conta de administrador com e-mail '{command.Email}': {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }
