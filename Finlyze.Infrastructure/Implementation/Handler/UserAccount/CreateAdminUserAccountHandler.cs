@@ -26,12 +26,18 @@ public class CreateAdminUserAccountHandler : ICreateAdminUserAccountHandler
             var existingEmail = await _userQuery.GetByEmailAsync(command.Email);
 
             if (existingEmail is not null)
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao criar essa conta do administrador com email '{command.Email}': Email já está em uso"));
                 return ResultHandler<UserAccount>.Fail("Email já está em uso.");
+            }
 
             var existingPhone = await _userQuery.GetByPhoneNumberAsync(command.PhoneNumber);
 
             if (existingPhone is not null)
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao criar essa conta do administrador com email '{command.Email}': Número de Telefone já está em uso"));
                 return ResultHandler<UserAccount>.Fail("PhoneNumber já está em uso.");
+            }
 
             var userAccount = new UserAccount(command.Name, command.Email, command.Password, command.PhoneNumber, command.BirthDate, true, (int)(ERole.User | ERole.Admin));
 
