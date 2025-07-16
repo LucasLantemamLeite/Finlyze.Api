@@ -12,7 +12,6 @@ public class UserAccount : EntityGuid
     public CreateAt CreateAt { get; private set; }
     public Active Active { get; private set; }
     public Role Role { get; private set; }
-    public List<Transaction> Transactions { get; private set; } = new();
 
     public void ChangeName(string? name)
     {

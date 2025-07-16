@@ -4,7 +4,7 @@ public class AppLogRaw
 {
     public int Id { get; set; }
     public int LogType { get; set; }
-    public string LogTitle { get; set; }
-    public string LogDescription { get; set; }
-    public DateTime LogCreateAt { get; set; }
+    public string Title { get; set; }
+    public string Description { get; set; }
+    public DateTime CreateAt { get; set; }
 }

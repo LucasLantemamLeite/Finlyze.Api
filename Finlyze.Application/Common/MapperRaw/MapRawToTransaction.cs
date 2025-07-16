@@ -4,6 +4,6 @@ namespace Finlyze.Application.Entity.Raw.Convert;
 
 public static class MapRawToTransaction
 {
-    public static Transaction ToSingleTransaction(this TransactionRaw transaction_raw) => new Transaction(transaction_raw.Id, transaction_raw.TransactionTitle, transaction_raw.TransactionDescription, transaction_raw.Amount, transaction_raw.TypeTransaction, transaction_raw.TransactionCreateAt, transaction_raw.TransactionUpdateAt, transaction_raw.UserAccountId);
-    public static IEnumerable<Transaction> ToEnumerableTransaction(this IEnumerable<TransactionRaw> raws) => raws.Select(raw => raw.ToSingleTransaction());
+    public static FinancialTransaction ToSingleTransaction(this TransactionRaw transaction_raw) => new FinancialTransaction(transaction_raw.Id, transaction_raw.Title, transaction_raw.Description, transaction_raw.Amount, transaction_raw.TranType, transaction_raw.CreateAt, transaction_raw.UpdateAt, transaction_raw.UserAccountId);
+    public static IEnumerable<FinancialTransaction> ToEnumerableTransaction(this IEnumerable<TransactionRaw> raws) => raws.Select(raw => raw.ToSingleTransaction());
 }

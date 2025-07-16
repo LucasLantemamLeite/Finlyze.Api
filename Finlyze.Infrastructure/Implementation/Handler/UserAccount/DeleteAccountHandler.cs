@@ -27,7 +27,7 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
 
             if (existingUser is null)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Não foi possível deletar a conta: ID '{command.Id}' não encontrado."));
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Warning, "UserAccount", $"Não foi possível deletar a conta: ID '{command.Id}' não encontrado."));
                 return ResultHandler<UserAccount>.Fail("Conta de usuário com esse ID não foi encontrada.");
             }
 
@@ -35,11 +35,11 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao deletar conta de usuário: ID '{existingUser.Id}'."));
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Falha ao deletar conta de usuário: ID '{existingUser.Id}'."));
                 return ResultHandler<UserAccount>.Fail("Falha ao deletar conta do usuário.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta de usuário deletada com sucesso: ID '{existingUser.Id}'."));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "UserAccount", $"Conta de usuário deletada com sucesso: ID '{existingUser.Id}'."));
 
             return ResultHandler<UserAccount>.Ok("Conta deletada com sucesso.", null);
         }
@@ -47,7 +47,7 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao deletar conta de usuário com ID '{command.Id}': {errorMsg}"));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao deletar conta de usuário com ID '{command.Id}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

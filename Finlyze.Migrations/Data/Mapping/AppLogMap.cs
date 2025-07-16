@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finlyze.Migrations.Data.Mapping;
 
-public class AppLogMap : IEntityTypeConfiguration<AppLog>
+public class AppLogMap : IEntityTypeConfiguration<SystemLog>
 {
-    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<AppLog> builder)
+    public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<SystemLog> builder)
     {
-        builder.ToTable("AppLog");
+        builder.ToTable("SystemLog");
 
         builder.HasKey(x => x.Id);
 
@@ -25,26 +25,26 @@ public class AppLogMap : IEntityTypeConfiguration<AppLog>
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.LogTitle, title =>
+        builder.OwnsOne(x => x.Title, title =>
         {
             title.Property(x => x.Value)
-                .HasColumnName("LogTitle")
+                .HasColumnName("Title")
                 .HasColumnType("Nvarchar(100)")
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.LogDescription, description =>
+        builder.OwnsOne(x => x.Description, description =>
         {
             description.Property(x => x.Value)
-                .HasColumnName("LogDescription")
+                .HasColumnName("Description")
                 .HasColumnType("Nvarchar(200)")
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.LogCreateAt, create =>
+        builder.OwnsOne(x => x.CreateAt, create =>
         {
             create.Property(x => x.Value)
-                .HasColumnName("LogCreateAt")
+                .HasColumnName("CreateAt")
                 .HasColumnType("DateTime")
                 .IsRequired();
         });

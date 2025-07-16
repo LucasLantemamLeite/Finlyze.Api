@@ -4,12 +4,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Finlyze.Migrations.Data.Mapping;
 
-public class TransactionMap : IEntityTypeConfiguration<Transaction>
+public class TransactionMap : IEntityTypeConfiguration<FinancialTransaction>
 {
-    public void Configure(EntityTypeBuilder<Transaction> builder)
+    public void Configure(EntityTypeBuilder<FinancialTransaction> builder)
     {
 
-        builder.ToTable("Transaction");
+        builder.ToTable("FinancialTransaction");
 
         builder.HasKey(x => x.Id);
 
@@ -19,18 +19,18 @@ public class TransactionMap : IEntityTypeConfiguration<Transaction>
             .UseIdentityColumn()
             .ValueGeneratedOnAdd();
 
-        builder.OwnsOne(x => x.TransactionTitle, title =>
+        builder.OwnsOne(x => x.Title, title =>
         {
             title.Property(x => x.Value)
-                .HasColumnName("TransactionTitle")
+                .HasColumnName("Title")
                 .HasColumnType("Nvarchar(100)")
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.TransactionDescription, descripton =>
+        builder.OwnsOne(x => x.Description, descripton =>
         {
             descripton.Property(x => x.Value)
-            .HasColumnName("TransactionDescription")
+            .HasColumnName("Description")
             .HasColumnType("Nvarchar(300)");
         });
 
@@ -42,26 +42,26 @@ public class TransactionMap : IEntityTypeConfiguration<Transaction>
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.TypeTransaction, type =>
+        builder.OwnsOne(x => x.TranType, type =>
         {
             type.Property(x => x.Value)
-                .HasColumnName("TypeTransaction")
+                .HasColumnName("TranType")
                 .HasColumnType("Int")
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.TransactionCreateAt, create =>
+        builder.OwnsOne(x => x.CreateAt, create =>
         {
             create.Property(x => x.Value)
-                .HasColumnName("TransactionCreateAt")
+                .HasColumnName("CreateAt")
                 .HasColumnType("DateTime")
                 .IsRequired();
         });
 
-        builder.OwnsOne(x => x.TransactionUpdateAt, update =>
+        builder.OwnsOne(x => x.UpdateAt, update =>
         {
             update.Property(x => x.Value)
-                .HasColumnName("TransactionUpdateAt")
+                .HasColumnName("UpdateAt")
                 .HasColumnType("DateTime")
                 .IsRequired();
         });
@@ -69,11 +69,6 @@ public class TransactionMap : IEntityTypeConfiguration<Transaction>
         builder.Property(x => x.UserAccountId)
             .HasColumnName("UserAccountId")
             .IsRequired();
-
-        builder.HasOne(x => x.UserAccount)
-            .WithMany(x => x.Transactions)
-            .HasForeignKey(x => x.UserAccountId)
-            .OnDelete(DeleteBehavior.Cascade);
 
     }
 }

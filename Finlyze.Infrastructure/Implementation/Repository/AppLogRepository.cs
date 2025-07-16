@@ -11,41 +11,41 @@ public class AppLogRepository : IAppLogRepository
 
     public AppLogRepository(IDbConnection connection) => _connection = connection;
 
-    public async Task<int> CreateAsync(AppLog log)
+    public async Task<int> CreateAsync(SystemLog log)
     {
-        var sql = @"INSERT INTO AppLog (LogType, LogTitle, LogDescription, LogCreateAt)
+        var sql = @"INSERT INTO SystemLog (LogType, Title, Description, CreateAt)
         VALUES
-        (@LogType, @LogTitle, @LogDescription, @LogCreateAt)";
+        (@LogType, @Title, @Description, @CreateAt)";
 
         var parameters = new
         {
             LogType = log.LogType.Value,
-            LogTitle = log.LogTitle.Value,
-            LogDescription = log.LogDescription.Value,
-            LogCreateAt = log.LogCreateAt.Value
+            Title = log.Title.Value,
+            Description = log.Description.Value,
+            CreateAt = log.CreateAt.Value
         };
 
         return await _connection.ExecuteAsync(sql, parameters);
     }
 
-    public async Task<int> DeleteAsync(AppLog log)
+    public async Task<int> DeleteAsync(SystemLog log)
     {
-        var sql = @"DELETE FROM AppLog WHERE Id = @Id";
-        var parameters = new { Id = log.Id };
+        var sql = @"DELETE FROM SystemLog WHERE Id = @Id";
+        var parameters = new { log.Id };
         return await _connection.ExecuteAsync(sql, parameters);
     }
 
-    public async Task<int> UpdateAsync(AppLog log)
+    public async Task<int> UpdateAsync(SystemLog log)
     {
-        var sql = @"UPDATE AppLog SET LogType = @LogType, LogTitle = @LogTitle, LogDescription = @LogDescription, LogCreateAt = @LogCreateAt WHERE Id = @Id";
+        var sql = @"UPDATE AppLog SET LogType = @LogType, Title = @Title, Description = @Description, CreateAt = @CreateAt WHERE Id = @Id";
 
         var parameters = new
         {
-            Id = log.Id,
+            log.Id,
             LogType = log.LogType.Value,
-            LogTitle = log.LogTitle.Value,
-            LogDescription = log.LogDescription.Value,
-            LogCreateAt = log.LogCreateAt.Value
+            Title = log.Title.Value,
+            Description = log.Description.Value,
+            CreateAt = log.CreateAt.Value
         };
 
         return await _connection.ExecuteAsync(sql, parameters);

@@ -21,7 +21,7 @@ public class CreateTransactionHandler : ICreateTransactionHandler
         _appRepository = appRepository;
     }
 
-    public async Task<ResultHandler<Transaction>> Handle(CreateTransactionCommand command)
+    public async Task<ResultHandler<FinancialTransaction>> Handle(CreateTransactionCommand command)
     {
         try
         {
@@ -29,33 +29,33 @@ public class CreateTransactionHandler : ICreateTransactionHandler
 
             if (existingUser is null)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "Transaction", $"Falha ao criar transação: usuário com ID '{command.UserAccountId}' não encontrado."));
-                return ResultHandler<Transaction>.Fail("Usuário com esse ID não foi encontrado.");
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Warning, "FinancialTransaction", $"Falha ao criar transação: usuário com ID '{command.UserAccountId}' não encontrado."));
+                return ResultHandler<FinancialTransaction>.Fail("Usuário com esse ID não foi encontrado.");
             }
 
-            var transaction = new Transaction(command.TransactionTitle, command.TransactionDescription, command.Amount, command.TypeTransaction, command.TransactionCreateAt, command.UserAccountId);
+            var transaction = new FinancialTransaction(command.Title, command.Description, command.Amount, command.TranType, command.CreateAt, command.UserAccountId);
 
             var id = await _transRepository.UpdateAsync(transaction);
 
             transaction.ChangeId(id);
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Transaction", $"Transação criada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "FinancialTransaction", $"Transação criada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
-            return ResultHandler<Transaction>.Ok("Transação criada com sucesso.", transaction);
+            return ResultHandler<FinancialTransaction>.Ok("Transação criada com sucesso.", transaction);
         }
 
         catch (Exception ex) when (ex is DomainException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "Transaction", $"Falha de validação ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
-            return ResultHandler<Transaction>.Fail(errorMsg);
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Validation, "FinancialTransaction", $"Falha de validação ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
+            return ResultHandler<FinancialTransaction>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "Transaction", $"Erro inesperado ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
-            return ResultHandler<Transaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Erro inesperado ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
+            return ResultHandler<FinancialTransaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
 }

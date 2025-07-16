@@ -22,21 +22,7 @@ namespace Finlyze.Migrations.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Finlyze.Domain.Entity.AppLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("Int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppLog", (string)null);
-                });
-
-            modelBuilder.Entity("Finlyze.Domain.Entity.Transaction", b =>
+            modelBuilder.Entity("Finlyze.Domain.Entity.FinancialTransaction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -53,7 +39,21 @@ namespace Finlyze.Migrations.Migrations
 
                     b.HasIndex("UserAccountId");
 
-                    b.ToTable("Transaction", (string)null);
+                    b.ToTable("FinancialTransaction", (string)null);
+                });
+
+            modelBuilder.Entity("Finlyze.Domain.Entity.SystemLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("Int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemLog", (string)null);
                 });
 
             modelBuilder.Entity("Finlyze.Domain.Entity.UserAccount", b =>
@@ -67,220 +67,220 @@ namespace Finlyze.Migrations.Migrations
                     b.ToTable("UserAccount", (string)null);
                 });
 
-            modelBuilder.Entity("Finlyze.Domain.Entity.AppLog", b =>
-                {
-                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogCreateAt", "LogCreateAt", b1 =>
-                        {
-                            b1.Property<int>("AppLogId")
-                                .HasColumnType("Int");
-
-                            b1.Property<DateTime>("Value")
-                                .HasColumnType("DateTime")
-                                .HasColumnName("LogCreateAt");
-
-                            b1.HasKey("AppLogId");
-
-                            b1.ToTable("AppLog");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AppLogId");
-                        });
-
-                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogDescription", "LogDescription", b1 =>
-                        {
-                            b1.Property<int>("AppLogId")
-                                .HasColumnType("Int");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("Nvarchar(200)")
-                                .HasColumnName("LogDescription");
-
-                            b1.HasKey("AppLogId");
-
-                            b1.ToTable("AppLog");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AppLogId");
-                        });
-
-                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogTitle", "LogTitle", b1 =>
-                        {
-                            b1.Property<int>("AppLogId")
-                                .HasColumnType("Int");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("Nvarchar(100)")
-                                .HasColumnName("LogTitle");
-
-                            b1.HasKey("AppLogId");
-
-                            b1.ToTable("AppLog");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AppLogId");
-                        });
-
-                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogType", "LogType", b1 =>
-                        {
-                            b1.Property<int>("AppLogId")
-                                .HasColumnType("Int");
-
-                            b1.Property<int>("Value")
-                                .HasColumnType("Int")
-                                .HasColumnName("LogType");
-
-                            b1.HasKey("AppLogId");
-
-                            b1.ToTable("AppLog");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AppLogId");
-                        });
-
-                    b.Navigation("LogCreateAt")
-                        .IsRequired();
-
-                    b.Navigation("LogDescription")
-                        .IsRequired();
-
-                    b.Navigation("LogTitle")
-                        .IsRequired();
-
-                    b.Navigation("LogType")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Finlyze.Domain.Entity.Transaction", b =>
+            modelBuilder.Entity("Finlyze.Domain.Entity.FinancialTransaction", b =>
                 {
                     b.HasOne("Finlyze.Domain.Entity.UserAccount", "UserAccount")
-                        .WithMany("Transactions")
+                        .WithMany()
                         .HasForeignKey("UserAccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.Amount", "Amount", b1 =>
                         {
-                            b1.Property<int>("TransactionId")
+                            b1.Property<int>("FinancialTransactionId")
                                 .HasColumnType("Int");
 
                             b1.Property<decimal>("Value")
                                 .HasColumnType("decimal(18,2)")
                                 .HasColumnName("Amount");
 
-                            b1.HasKey("TransactionId");
+                            b1.HasKey("FinancialTransactionId");
 
-                            b1.ToTable("Transaction");
+                            b1.ToTable("FinancialTransaction");
 
                             b1.WithOwner()
-                                .HasForeignKey("TransactionId");
+                                .HasForeignKey("FinancialTransactionId");
                         });
 
-                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionCreateAt", "TransactionCreateAt", b1 =>
+                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.CreateAt", "CreateAt", b1 =>
                         {
-                            b1.Property<int>("TransactionId")
+                            b1.Property<int>("FinancialTransactionId")
                                 .HasColumnType("Int");
 
                             b1.Property<DateTime>("Value")
                                 .HasColumnType("DateTime")
-                                .HasColumnName("TransactionCreateAt");
+                                .HasColumnName("CreateAt");
 
-                            b1.HasKey("TransactionId");
+                            b1.HasKey("FinancialTransactionId");
 
-                            b1.ToTable("Transaction");
+                            b1.ToTable("FinancialTransaction");
 
                             b1.WithOwner()
-                                .HasForeignKey("TransactionId");
+                                .HasForeignKey("FinancialTransactionId");
                         });
 
-                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionDescription", "TransactionDescription", b1 =>
+                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.Description", "Description", b1 =>
                         {
-                            b1.Property<int>("TransactionId")
+                            b1.Property<int>("FinancialTransactionId")
                                 .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .HasColumnType("Nvarchar(300)")
-                                .HasColumnName("TransactionDescription");
+                                .HasColumnName("Description");
 
-                            b1.HasKey("TransactionId");
+                            b1.HasKey("FinancialTransactionId");
 
-                            b1.ToTable("Transaction");
+                            b1.ToTable("FinancialTransaction");
 
                             b1.WithOwner()
-                                .HasForeignKey("TransactionId");
+                                .HasForeignKey("FinancialTransactionId");
                         });
 
-                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionTitle", "TransactionTitle", b1 =>
+                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.Title", "Title", b1 =>
                         {
-                            b1.Property<int>("TransactionId")
+                            b1.Property<int>("FinancialTransactionId")
                                 .HasColumnType("Int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
                                 .HasColumnType("Nvarchar(100)")
-                                .HasColumnName("TransactionTitle");
+                                .HasColumnName("Title");
 
-                            b1.HasKey("TransactionId");
+                            b1.HasKey("FinancialTransactionId");
 
-                            b1.ToTable("Transaction");
-
-                            b1.WithOwner()
-                                .HasForeignKey("TransactionId");
-                        });
-
-                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TransactionUpdateAt", "TransactionUpdateAt", b1 =>
-                        {
-                            b1.Property<int>("TransactionId")
-                                .HasColumnType("Int");
-
-                            b1.Property<DateTime>("Value")
-                                .HasColumnType("DateTime")
-                                .HasColumnName("TransactionUpdateAt");
-
-                            b1.HasKey("TransactionId");
-
-                            b1.ToTable("Transaction");
+                            b1.ToTable("FinancialTransaction");
 
                             b1.WithOwner()
-                                .HasForeignKey("TransactionId");
+                                .HasForeignKey("FinancialTransactionId");
                         });
 
-                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TypeTransaction", "TypeTransaction", b1 =>
+                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.TranType", "TranType", b1 =>
                         {
-                            b1.Property<int>("TransactionId")
+                            b1.Property<int>("FinancialTransactionId")
                                 .HasColumnType("Int");
 
                             b1.Property<int>("Value")
                                 .HasColumnType("Int")
-                                .HasColumnName("TypeTransaction");
+                                .HasColumnName("TranType");
 
-                            b1.HasKey("TransactionId");
+                            b1.HasKey("FinancialTransactionId");
 
-                            b1.ToTable("Transaction");
+                            b1.ToTable("FinancialTransaction");
 
                             b1.WithOwner()
-                                .HasForeignKey("TransactionId");
+                                .HasForeignKey("FinancialTransactionId");
+                        });
+
+                    b.OwnsOne("Finlyze.Domain.ValueObject.TransactionObjects.UpdateAt", "UpdateAt", b1 =>
+                        {
+                            b1.Property<int>("FinancialTransactionId")
+                                .HasColumnType("Int");
+
+                            b1.Property<DateTime>("Value")
+                                .HasColumnType("DateTime")
+                                .HasColumnName("UpdateAt");
+
+                            b1.HasKey("FinancialTransactionId");
+
+                            b1.ToTable("FinancialTransaction");
+
+                            b1.WithOwner()
+                                .HasForeignKey("FinancialTransactionId");
                         });
 
                     b.Navigation("Amount")
                         .IsRequired();
 
-                    b.Navigation("TransactionCreateAt")
+                    b.Navigation("CreateAt")
                         .IsRequired();
 
-                    b.Navigation("TransactionDescription");
+                    b.Navigation("Description");
 
-                    b.Navigation("TransactionTitle")
+                    b.Navigation("Title")
                         .IsRequired();
 
-                    b.Navigation("TransactionUpdateAt")
+                    b.Navigation("TranType")
                         .IsRequired();
 
-                    b.Navigation("TypeTransaction")
+                    b.Navigation("UpdateAt")
                         .IsRequired();
 
                     b.Navigation("UserAccount");
+                });
+
+            modelBuilder.Entity("Finlyze.Domain.Entity.SystemLog", b =>
+                {
+                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.CreateAt", "CreateAt", b1 =>
+                        {
+                            b1.Property<int>("SystemLogId")
+                                .HasColumnType("Int");
+
+                            b1.Property<DateTime>("Value")
+                                .HasColumnType("DateTime")
+                                .HasColumnName("CreateAt");
+
+                            b1.HasKey("SystemLogId");
+
+                            b1.ToTable("SystemLog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SystemLogId");
+                        });
+
+                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.Description", "Description", b1 =>
+                        {
+                            b1.Property<int>("SystemLogId")
+                                .HasColumnType("Int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("Nvarchar(200)")
+                                .HasColumnName("Description");
+
+                            b1.HasKey("SystemLogId");
+
+                            b1.ToTable("SystemLog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SystemLogId");
+                        });
+
+                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.LogType", "LogType", b1 =>
+                        {
+                            b1.Property<int>("SystemLogId")
+                                .HasColumnType("Int");
+
+                            b1.Property<int>("Value")
+                                .HasColumnType("Int")
+                                .HasColumnName("LogType");
+
+                            b1.HasKey("SystemLogId");
+
+                            b1.ToTable("SystemLog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SystemLogId");
+                        });
+
+                    b.OwnsOne("Finlyze.Domain.ValueObject.AppLogObjects.Title", "Title", b1 =>
+                        {
+                            b1.Property<int>("SystemLogId")
+                                .HasColumnType("Int");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("Nvarchar(100)")
+                                .HasColumnName("Title");
+
+                            b1.HasKey("SystemLogId");
+
+                            b1.ToTable("SystemLog");
+
+                            b1.WithOwner()
+                                .HasForeignKey("SystemLogId");
+                        });
+
+                    b.Navigation("CreateAt")
+                        .IsRequired();
+
+                    b.Navigation("Description")
+                        .IsRequired();
+
+                    b.Navigation("LogType")
+                        .IsRequired();
+
+                    b.Navigation("Title")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Finlyze.Domain.Entity.UserAccount", b =>
@@ -454,11 +454,6 @@ namespace Finlyze.Migrations.Migrations
 
                     b.Navigation("Role")
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("Finlyze.Domain.Entity.UserAccount", b =>
-                {
-                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }

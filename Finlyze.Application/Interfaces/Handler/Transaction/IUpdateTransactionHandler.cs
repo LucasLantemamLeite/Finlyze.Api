@@ -6,5 +6,5 @@ namespace Finlyze.Application.Abstract.Interface.Handler;
 
 public interface IUpdateTransactionHandler
 {
-    Task<ResultHandler<Transaction>> Handle(UpdateTransactionCommand command);
+    Task<ResultHandler<FinancialTransaction>> Handle(UpdateTransactionCommand command);
 }

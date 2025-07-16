@@ -6,25 +6,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Finlyze.Migrations.Migrations
 {
     /// <inheritdoc />
-    public partial class TrocadacolunadeIddeGuidparaInt : Migration
+    public partial class InitialDeploy : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppLog",
+                name: "SystemLog",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "Int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LogType = table.Column<int>(type: "Int", nullable: false),
-                    LogTitle = table.Column<string>(type: "Nvarchar(100)", nullable: false),
-                    LogDescription = table.Column<string>(type: "Nvarchar(200)", nullable: false),
-                    LogCreateAt = table.Column<DateTime>(type: "DateTime", nullable: false)
+                    Title = table.Column<string>(type: "Nvarchar(100)", nullable: false),
+                    Description = table.Column<string>(type: "Nvarchar(200)", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "DateTime", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppLog", x => x.Id);
+                    table.PrimaryKey("PK_SystemLog", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -47,24 +47,24 @@ namespace Finlyze.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Transaction",
+                name: "FinancialTransaction",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "Int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TransactionTitle = table.Column<string>(type: "Nvarchar(100)", nullable: false),
-                    TransactionDescription = table.Column<string>(type: "Nvarchar(300)", nullable: true),
+                    Title = table.Column<string>(type: "Nvarchar(100)", nullable: false),
+                    Description = table.Column<string>(type: "Nvarchar(300)", nullable: true),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TypeTransaction = table.Column<int>(type: "Int", nullable: false),
-                    TransactionCreateAt = table.Column<DateTime>(type: "DateTime", nullable: false),
-                    TransactionUpdateAt = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    TranType = table.Column<int>(type: "Int", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "DateTime", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "DateTime", nullable: false),
                     UserAccountId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Transaction", x => x.Id);
+                    table.PrimaryKey("PK_FinancialTransaction", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Transaction_UserAccount_UserAccountId",
+                        name: "FK_FinancialTransaction_UserAccount_UserAccountId",
                         column: x => x.UserAccountId,
                         principalTable: "UserAccount",
                         principalColumn: "Id",
@@ -72,8 +72,8 @@ namespace Finlyze.Migrations.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Transaction_UserAccountId",
-                table: "Transaction",
+                name: "IX_FinancialTransaction_UserAccountId",
+                table: "FinancialTransaction",
                 column: "UserAccountId");
 
             migrationBuilder.CreateIndex(
@@ -93,10 +93,10 @@ namespace Finlyze.Migrations.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AppLog");
+                name: "FinancialTransaction");
 
             migrationBuilder.DropTable(
-                name: "Transaction");
+                name: "SystemLog");
 
             migrationBuilder.DropTable(
                 name: "UserAccount");

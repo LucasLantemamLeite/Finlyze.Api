@@ -29,13 +29,13 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
 
             if (userAccount is null)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Não foi possível atualizar a conta: ID '{command.Id}' não encontrado."));
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Warning, "UserAccount", $"Não foi possível atualizar a conta: ID '{command.Id}' não encontrado."));
                 return ResultHandler<UserAccount>.Fail("Conta de usuário com esse ID não foi encontrada.");
             }
 
             if (!userAccount.Password.Value.VerifyHash(command.ConfirmPassword))
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao atualizar conta do usuário ID '{command.Id}': senha incorreta na confirmação."));
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Falha ao atualizar conta do usuário ID '{command.Id}': senha incorreta na confirmação."));
                 return ResultHandler<UserAccount>.Fail("Senha incorreta.");
             }
 
@@ -51,11 +51,11 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao atualizar conta do usuário ID '{command.Id}'."));
+                await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Falha ao atualizar conta do usuário ID '{command.Id}'."));
                 return ResultHandler<UserAccount>.Fail("Falha ao atualizar a conta.");
             }
 
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "UserAccount", $"Conta de usuário ID '{userAccount.Id}' atualizada com sucesso."));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "UserAccount", $"Conta de usuário ID '{userAccount.Id}' atualizada com sucesso."));
 
             return ResultHandler<UserAccount>.Ok("Conta atualizada com sucesso.", userAccount);
         }
@@ -63,14 +63,14 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao atualizar conta do usuário ID '{command.Id}': {errorMsg}"));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao atualizar conta do usuário ID '{command.Id}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao atualizar conta do usuário ID '{command.Id}': {errorMsg}"));
+            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao atualizar conta do usuário ID '{command.Id}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

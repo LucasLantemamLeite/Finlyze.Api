@@ -3,19 +3,19 @@ namespace Finlyze.Application.Abstract.Interface.Command;
 public class UpdateTransactionCommand
 {
     public int Id { get; set; }
-    public string TransactionTitle { get; set; }
-    public string? TransactionDescription { get; set; }
+    public string Title { get; set; }
+    public string? Description { get; set; }
     public decimal Amount { get; set; }
-    public int TypeTransaction { get; set; }
-    public DateTime TransactionCreateAt { get; set; }
+    public int TranType { get; set; }
+    public DateTime CreateAt { get; set; }
 
     public UpdateTransactionCommand(int id, string title, string description, decimal amount, int type, DateTime create)
     {
         Id = id;
-        TransactionTitle = title;
-        TransactionDescription = description;
+        Title = title;
+        Description = description;
         Amount = amount;
-        TypeTransaction = type;
-        TransactionCreateAt = create;
+        TranType = type;
+        CreateAt = create;
     }
 }
