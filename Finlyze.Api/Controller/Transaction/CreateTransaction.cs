@@ -17,7 +17,7 @@ public class CreateUserAccountController : ControllerBase
     public CreateUserAccountController(ICreateTransactionHandler handler) => _handler = handler;
 
     [Authorize]
-    [HttpPost("transactions")]
+    [HttpPost("transaction")]
     public async Task<IActionResult> CreateAsync([FromBody] CreateTransactionDto tran_dto)
     {
         try
@@ -41,12 +41,12 @@ public class CreateUserAccountController : ControllerBase
             if (!result.Success)
                 return BadRequest(new { result.Message });
 
-            return Ok(new { Message = "Transaction criado com sucesso.", result.Data });
+            return Ok(new { Message = "Transaction criado com sucesso." });
         }
 
-        catch (Exception e)
+        catch
         {
-            return StatusCode(500, new { Message = $"Erro interno do servidor. Tente novamente mais tarde.: {e.Message}" });
+            return StatusCode(500, new { Message = $"Erro interno do servidor. Tente novamente mais tarde." });
         }
     }
 }
