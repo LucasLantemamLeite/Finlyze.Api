@@ -39,7 +39,7 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
 
             await _appRepository.CreateAsync(new AppLog((int)ELog.Info, "Delete", $"Transaction com Id: {transaction.Id} deletado com sucesso"));
 
-            return ResultHandler<Transaction>.Ok("Transaction deletada com sucesso.", transaction);
+            return ResultHandler<Transaction>.Ok("Transaction deletada com sucesso.", null);
         }
 
         catch (Exception e)
