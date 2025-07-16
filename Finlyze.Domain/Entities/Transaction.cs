@@ -21,7 +21,7 @@ public class Transaction : EntityInt
             TransactionTitle = new TransactionTitle(title);
     }
 
-    public void ChangeDescription(string description)
+    public void ChangeDescription(string? description)
     {
         if (description != TransactionDescription?.Value)
             TransactionDescription = new TransactionDescription(description);
@@ -45,11 +45,7 @@ public class Transaction : EntityInt
             TransactionCreateAt = new TransactionCreateAt(create);
     }
 
-    public void ChangeUpdate(DateTime update)
-    {
-        if (update != TransactionUpdateAt.Value)
-            TransactionUpdateAt = new TransactionUpdateAt(update);
-    }
+    public void ChangeUpdate() => TransactionUpdateAt = new TransactionUpdateAt();
 
     public Transaction(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
