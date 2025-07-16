@@ -1,4 +1,3 @@
-using Finlyze.Api.Controller.Users;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Application.Abstract.Interface.Handler;
 using Finlyze.Infrastructure.Implementation.Interfaces.Handler;
