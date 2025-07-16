@@ -25,7 +25,10 @@ public class DeleteUserAccountHandler : IDeleteAccountHandler
             var existingUser = await _userQuery.GetByIdAsync(command.Id);
 
             if (existingUser is null)
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao deletar conta do usuário do Id '{command.Id}': Conta não foi encontrada"));
                 return ResultHandler<UserAccount>.Fail("Usuário não encontrada.");
+            }
 
             var row = await _userRepository.DeleteAsync(existingUser);
 
