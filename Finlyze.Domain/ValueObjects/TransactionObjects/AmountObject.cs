@@ -4,7 +4,7 @@ namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
 public class Amount : ValueObject
 {
-    public decimal Value { get; set; }
+    public decimal Value { get; private set; }
 
     public Amount(decimal amount)
     {

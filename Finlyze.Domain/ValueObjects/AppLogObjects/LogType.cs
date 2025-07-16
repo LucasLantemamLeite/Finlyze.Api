@@ -5,7 +5,7 @@ namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
 public class LogType : ValueObject
 {
-    public ELog Value { get; set; }
+    public ELog Value { get; private set; }
 
     public LogType(int log)
     {

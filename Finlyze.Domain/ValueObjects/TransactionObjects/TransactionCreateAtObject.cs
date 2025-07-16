@@ -2,7 +2,7 @@ namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
 public class TransactionCreateAt : ValueObject
 {
-    public DateTime Value { get; set; }
+    public DateTime Value { get; private set; }
 
     public TransactionCreateAt(DateTime? date)
     {

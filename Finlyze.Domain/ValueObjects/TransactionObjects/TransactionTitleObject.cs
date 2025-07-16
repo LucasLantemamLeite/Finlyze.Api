@@ -4,7 +4,7 @@ namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
 public class TransactionTitle : ValueObject
 {
-    public string Value { get; set; }
+    public string Value { get; private set; }
 
     public TransactionTitle(string title)
     {

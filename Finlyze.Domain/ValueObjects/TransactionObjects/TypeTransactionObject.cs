@@ -5,7 +5,7 @@ namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
 public class TypeTransaction : ValueObject
 {
-    public EType Value { get; set; }
+    public EType Value { get; private set; }
 
     public TypeTransaction(int type)
     {

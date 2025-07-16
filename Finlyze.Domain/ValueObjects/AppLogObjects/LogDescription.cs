@@ -4,7 +4,7 @@ namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
 public class LogDescription : ValueObject
 {
-    public string Value { get; set; }
+    public string Value { get; private set; }
 
     public LogDescription(string description)
     {

@@ -2,7 +2,7 @@ namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
 public class LogCreateAt : ValueObject
 {
-    public DateTime Value { get; set; }
+    public DateTime Value { get; private set; }
 
     public LogCreateAt()
     {
