@@ -3,12 +3,14 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces;
+namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
 public class AppLogRepository : IAppLogRepository
 {
     private readonly IDbConnection _connection;
+
     public AppLogRepository(IDbConnection connection) => _connection = connection;
+
     public async Task<int> CreateAsync(AppLog log)
     {
         var sql = @"INSERT INTO AppLog (LogType, LogTitle, LogDescription, LogCreateAt)

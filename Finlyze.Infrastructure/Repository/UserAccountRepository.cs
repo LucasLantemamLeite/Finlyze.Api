@@ -3,14 +3,15 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
 using Finlyze.Application.Authentication.Hasher;
-using Finlyze.Domain.ValueObject.UserAccountObject;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
 public class UserAccountRepository : IUserAccountRepository
 {
     private readonly IDbConnection _connection;
+
     public UserAccountRepository(IDbConnection connection) => _connection = connection;
+
     public async Task<int> CreateAsync(UserAccount user)
     {
         var sql = @"

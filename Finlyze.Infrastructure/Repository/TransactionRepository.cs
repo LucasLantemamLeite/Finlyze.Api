@@ -4,12 +4,14 @@ using Dapper;
 using Finlyze.Application.Abstract.Interface;
 using Finlyze.Domain.Entity;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces;
+namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
 public class TransactionRepository : ITransactionRepository
 {
     private readonly IDbConnection _connection;
+
     public TransactionRepository(IDbConnection connection) => _connection = connection;
+
     public async Task<int> CreateAsync(Transaction transaction)
     {
         var sql = @"INSERT INTO [Transaction]
