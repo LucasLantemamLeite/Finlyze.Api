@@ -28,7 +28,7 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
             var userAccount = await _userQuery.GetByIdAsync(command.Id);
 
             if (userAccount is null)
-                return ResultHandler<UserAccount>.Fail("Conta não encontrada.");
+                return ResultHandler<UserAccount>.Fail("Conta de usuário com esse Id não encontrada.");
 
             if (!userAccount.Password.Value.VerifyHash(command.ConfirmPassword))
             {
@@ -59,9 +59,9 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
 
         catch (Exception ex) when (ex is DomainException or EmailRegexException or PhoneNumberRegexException or EnumException)
         {
-            var msg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao atualizar conta do usuário do Id '{command.Id}': {msg}"));
-            return ResultHandler<UserAccount>.Fail(msg);
+            var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Validation, "UserAccount", $"Erro de validação ao atualizar conta do usuário do Id '{command.Id}': {errorMsg}"));
+            return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
