@@ -27,7 +27,7 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
 
             if (userAccount is null || !userAccount.Password.Value.VerifyHash(command.Password))
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao fazer login na conta com email '{command.Email}': Credencias incorretas"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao fazer login na conta com email '{command.Email}': Credencias incorretas"));
                 return ResultHandler<UserAccount>.Fail("Credenciais incorretas.");
             }
 
@@ -46,7 +46,7 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido";
-            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao fazer login na conta com email '{command.Email}': {errorMsg}"));
+            await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao fazer login na conta com email '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail($"Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }
