@@ -3,15 +3,15 @@ using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
-public class TypeTransaction : ValueObject
+public class TranType : ValueObject
 {
     public EType Value { get; private set; }
 
-    public TypeTransaction(int type)
+    public TranType(int type)
     {
         EnumException.ThrowIfNotDefined<EType>(type, "Type Inválido.");
         Value = (EType)type;
     }
 
-    private TypeTransaction() { }
+    private TranType() { }
 }

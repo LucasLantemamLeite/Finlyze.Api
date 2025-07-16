@@ -1,15 +1,15 @@
 namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
-public class TransactionUpdateAt : ValueObject
+public class UpdateAt : ValueObject
 {
     public DateTime Value { get; private set; }
 
-    public TransactionUpdateAt()
+    public UpdateAt()
     {
         Value = DateTime.UtcNow;
     }
 
-    public TransactionUpdateAt(DateTime update_at)
+    public UpdateAt(DateTime update_at)
     {
         Value = update_at;
     }

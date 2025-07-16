@@ -1,15 +1,15 @@
 namespace Finlyze.Domain.ValueObject.AppLogObjects;
 
-public class LogCreateAt : ValueObject
+public class CreateAt : ValueObject
 {
     public DateTime Value { get; private set; }
 
-    public LogCreateAt()
+    public CreateAt()
     {
         Value = DateTime.UtcNow;
     }
 
-    public LogCreateAt(DateTime create_at)
+    public CreateAt(DateTime create_at)
     {
         Value = create_at;
     }

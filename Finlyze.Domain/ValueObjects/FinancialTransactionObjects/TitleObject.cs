@@ -1,16 +1,16 @@
 using Finlyze.Domain.ValueObject.Validation;
 
-namespace Finlyze.Domain.ValueObject.AppLogObjects;
+namespace Finlyze.Domain.ValueObject.TransactionObjects;
 
-public class LogTitle : ValueObject
+public class Title : ValueObject
 {
     public string Value { get; private set; }
 
-    public LogTitle(string title)
+    public Title(string title)
     {
         DomainException.ThrowIfFalse(!string.IsNullOrWhiteSpace(title), "Title não pode ser vazio ou nulo.");
         Value = title;
     }
 
-    private LogTitle() { }
+    private Title() { }
 }
