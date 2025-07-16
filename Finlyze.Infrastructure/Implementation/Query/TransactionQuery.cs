@@ -10,6 +10,7 @@ namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 public class TransactionQuery : ITransactionQuery
 {
     private readonly IDbConnection _connection;
+
     public TransactionQuery(IDbConnection connection) => _connection = connection;
     private const string SqlSelectBase = "SELECT Id, TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId FROM [Transaction]";
 

@@ -10,6 +10,7 @@ namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 public class AppLogQuery : IAppLogQuery
 {
     private readonly IDbConnection _connection;
+
     public AppLogQuery(IDbConnection connection) => _connection = connection;
 
     private const string SqlSelectBase = "SELECT Id, LogType, LogTitle, LogDescription, LogCreateAt FROM AppLog";
