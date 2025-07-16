@@ -28,11 +28,14 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
             var userAccount = await _userQuery.GetByIdAsync(command.Id);
 
             if (userAccount is null)
+            {
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Warning, "UserAccount", $"Erro ao fazer login na conta do usuário do Id '{command.Id}': Conta de usuário com esse Id não encontrada"));
                 return ResultHandler<UserAccount>.Fail("Conta de usuário com esse Id não encontrada.");
+            }
 
             if (!userAccount.Password.Value.VerifyHash(command.ConfirmPassword))
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Senha incorreta na tentativa de atualização da conta do usuário do Id '{command.Id}'"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao fazer login na conta do usuário do Id '{command.Id}': Senha incorreta na tentativa de atualização"));
                 return ResultHandler<UserAccount>.Fail("Senha incorreta.");
             }
 
@@ -44,11 +47,11 @@ public class UpdateUserAccountHandler : IUpdateUserAccountHandler
             if (!userAccount.Password.Value.VerifyHash(command.Password) && !string.IsNullOrWhiteSpace(command.Password))
                 userAccount.ChangePassword(command.Password);
 
-            var row = await _userRepository.UpdateAsync(userAccount);
+            var rows = await _userRepository.UpdateAsync(userAccount);
 
-            if (row == 0)
+            if (rows == 0)
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao atualizar conta do usuário do Id '{command.Id}'"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Erro ao atualizar conta do usuário do Id '{command.Id}'"));
                 return ResultHandler<UserAccount>.Fail("Falha ao atualizar a conta.");
             }
 
