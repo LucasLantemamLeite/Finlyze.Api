@@ -11,16 +11,11 @@ namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 public class LoginUserAccountHandler : ILoginUserAccountHandler
 {
     private readonly IUserAccountQuery _userQuery;
-    private readonly IUserAccountRepository _userRepository;
     private readonly IAppLogRepository _appRepository;
 
-    public LoginUserAccountHandler(
-        IUserAccountQuery userQuery,
-        IUserAccountRepository userRepository,
-        IAppLogRepository appRepository)
+    public LoginUserAccountHandler(IUserAccountQuery userQuery, IAppLogRepository appRepository)
     {
         _userQuery = userQuery;
-        _userRepository = userRepository;
         _appRepository = appRepository;
     }
 
@@ -32,7 +27,7 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
 
             if (userAccount is null || !userAccount.Password.Value.VerifyHash(command.Password))
             {
-                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao fazer login na conta com email '{command.Email}'"));
+                await _appRepository.CreateAsync(new AppLog((int)ELog.Error, "UserAccount", $"Falha ao fazer login na conta com email '{command.Email}': Credencias incorretas"));
                 return ResultHandler<UserAccount>.Fail("Credenciais incorretas.");
             }
 
