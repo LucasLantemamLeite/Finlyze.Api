@@ -15,6 +15,42 @@ public class Transaction : EntityInt
 
     public void ChangeId(int id) => Id = id;
 
+    public void ChangeTitle(string title)
+    {
+        if (title is not null && title != TransactionTitle.Value)
+            TransactionTitle = new TransactionTitle(title);
+    }
+
+    public void ChangeDescription(string description)
+    {
+        if (description != TransactionDescription?.Value)
+            TransactionDescription = new TransactionDescription(description);
+    }
+
+    public void ChangeAmount(decimal amount)
+    {
+        if (amount != Amount.Value)
+            Amount = new Amount(amount);
+    }
+
+    public void ChangeType(int type)
+    {
+        if (type != (int)TypeTransaction.Value)
+            TypeTransaction = new TypeTransaction(type);
+    }
+
+    public void ChangeCreate(DateTime create)
+    {
+        if (create != TransactionCreateAt.Value)
+            TransactionCreateAt = new TransactionCreateAt(create);
+    }
+
+    public void ChangeUpdate(DateTime update)
+    {
+        if (update != TransactionUpdateAt.Value)
+            TransactionUpdateAt = new TransactionUpdateAt(update);
+    }
+
     public Transaction(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
         TransactionTitle = new TransactionTitle(title);
