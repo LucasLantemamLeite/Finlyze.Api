@@ -1,4 +1,3 @@
-using Finlyze.Domain.ValueObject.Enums;
 using Finlyze.Domain.ValueObject.UserAccountObject;
 using Finlyze.Domain.ValueObject.Validation;
 
