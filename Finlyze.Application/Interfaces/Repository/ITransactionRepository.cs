@@ -4,7 +4,7 @@ namespace Finlyze.Application.Abstract.Interface;
 
 public interface ITransactionRepository
 {
-    Task<int> CreateAsync(Transaction transaction);
-    Task<int> DeleteAsync(Transaction transaction);
-    Task<int> UpdateAsync(Transaction transaction);
+    Task<int> CreateAsync(FinancialTransaction transaction);
+    Task<int> DeleteAsync(FinancialTransaction transaction);
+    Task<int> UpdateAsync(FinancialTransaction transaction);
 }

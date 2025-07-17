@@ -14,7 +14,7 @@ public class AppLogTest
     [InlineData("Conta Delete")]
     public static void Dado_Um_Title_Válido_Adiciona_Na_Entidade(string title)
     {
-        var ex = Record.Exception(() => new LogTitle(title));
+        var ex = Record.Exception(() => new Title(title));
         Assert.Null(ex);
     }
 
@@ -26,7 +26,7 @@ public class AppLogTest
     [InlineData(null)]
     public static void Dado_Um_Title_Vazio_Ou_Nulo_Lança_Exceção(string title)
     {
-        var ex = Assert.Throws<DomainException>(() => new LogTitle(title));
+        var ex = Assert.Throws<DomainException>(() => new Title(title));
         Assert.NotNull(ex);
         Assert.Equal("Title não pode ser vazio ou nulo.", ex.Message);
     }

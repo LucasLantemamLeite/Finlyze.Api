@@ -15,8 +15,8 @@ public class CreateUserAccountController : ControllerBase
     private readonly ICreateUserAccountHandler _handler;
     public CreateUserAccountController(ICreateUserAccountHandler handler) => _handler = handler;
 
-    [HttpPost("users")]
     [AllowAnonymous]
+    [HttpPost("users")]
     public async Task<IActionResult> CreateAsync([FromBody] CreateUserAccountDto user_dto)
     {
         try

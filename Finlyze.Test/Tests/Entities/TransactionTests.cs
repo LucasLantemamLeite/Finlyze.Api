@@ -13,7 +13,7 @@ public class TransactionTest
     [InlineData("Supermercado")]
     public static void Dado_Um_Title_Válido_Adiciona_Na_Entidade(string title)
     {
-        var ex = Record.Exception(() => new TransactionTitle(title));
+        var ex = Record.Exception(() => new Title(title));
         Assert.Null(ex);
     }
 
@@ -23,7 +23,7 @@ public class TransactionTest
     [InlineData(null)]
     public static void Dado_Um_Title_Vazio_Ou_Nulo_Lança_Exceção(string title)
     {
-        var ex = Assert.Throws<DomainException>(() => new TransactionTitle(title));
+        var ex = Assert.Throws<DomainException>(() => new Title(title));
         Assert.NotNull(ex);
         Assert.Equal("Title não pode ser vazio ou nulo.", ex.Message);
     }
@@ -51,7 +51,7 @@ public class TransactionTest
     [InlineData(2)]
     public static void Dado_Um_TypeTransaction_Válido_Adiciona_Na_Entidade(int type)
     {
-        var ex = Record.Exception(() => new TypeTransaction(type));
+        var ex = Record.Exception(() => new TranType(type));
         Assert.Null(ex);
     }
 
@@ -62,7 +62,7 @@ public class TransactionTest
     [InlineData(-1)]
     public static void Dado_Um_TypeTransaction_Inválido_Lança_Exceção(int type)
     {
-        var ex = Assert.Throws<EnumException>(() => new TypeTransaction(type));
+        var ex = Assert.Throws<EnumException>(() => new TranType(type));
         Assert.NotNull(ex);
         Assert.Equal("Type Inválido.", ex.Message);
     }
