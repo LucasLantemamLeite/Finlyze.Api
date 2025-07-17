@@ -10,15 +10,15 @@ namespace Finlyze.Api.Controller.Transactions;
 [ApiController]
 [Route("api/v1")]
 [Tags("Transactions")]
-public class CreateUserAccountController : ControllerBase
+public class DeleteTrasactionController : ControllerBase
 {
-    private readonly ICreateTransactionHandler _handler;
+    private readonly IDeleteTransactionHandler _handler;
 
-    public CreateUserAccountController(ICreateTransactionHandler handler) => _handler = handler;
+    public DeleteTrasactionController(IDeleteTransactionHandler handler) => _handler = handler;
 
     [Authorize]
-    [HttpPost("transaction")]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateTransactionDto tran_dto)
+    [HttpDelete("transactions")]
+    public async Task<IActionResult> CreateAsync([FromBody] DeleteTransactionDto tran_dto)
     {
         try
         {
@@ -30,18 +30,15 @@ public class CreateUserAccountController : ControllerBase
             if (userId is null)
                 return Unauthorized();
 
-            Guid guidId;
-
-            if (!Guid.TryParse(userId, out guidId))
-                return BadRequest(new { Message = "Id inválido." });
-
-            var command = new CreateTransactionCommand(tran_dto.Title, tran_dto.Description, tran_dto.Amount, tran_dto.Type, tran_dto.CreateAt, guidId);
+            var command = new DeleteTransactionCommand(tran_dto.Id);
             var result = await _handler.Handle(command);
 
             if (!result.Success)
+            {
                 return BadRequest(new { result.Message });
+            }
 
-            return Ok(new { Message = "Transaction criado com sucesso." });
+            return Ok(new { Message = "Transaction deletada com sucesso." });
         }
 
         catch
