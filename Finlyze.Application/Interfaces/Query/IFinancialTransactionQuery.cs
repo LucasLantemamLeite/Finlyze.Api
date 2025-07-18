@@ -2,7 +2,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface ITransactionQuery
+public interface IFinancialTransactionQuery
 {
     Task<FinancialTransaction?> GetByIdAsync(int id);
     Task<IEnumerable<FinancialTransaction>> GetByTitleAsync(string title);

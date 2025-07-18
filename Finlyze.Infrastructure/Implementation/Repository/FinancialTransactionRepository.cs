@@ -5,11 +5,11 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
-public class TransactionRepository : ITransactionRepository
+public class FinancialTransactionRepository : IFinancialTransactionRepository
 {
     private readonly IDbConnection _connection;
 
-    public TransactionRepository(IDbConnection connection) => _connection = connection;
+    public FinancialTransactionRepository(IDbConnection connection) => _connection = connection;
 
     public async Task<int> CreateAsync(FinancialTransaction transaction)
     {

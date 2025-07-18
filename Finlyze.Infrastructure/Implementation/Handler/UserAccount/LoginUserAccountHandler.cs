@@ -11,12 +11,12 @@ namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 public class LoginUserAccountHandler : ILoginUserAccountHandler
 {
     private readonly IUserAccountQuery _userQuery;
-    private readonly IAppLogRepository _appRepository;
+    private readonly ISystemLogRepository _systemRepository;
 
-    public LoginUserAccountHandler(IUserAccountQuery userQuery, IAppLogRepository appRepository)
+    public LoginUserAccountHandler(IUserAccountQuery userQuery, ISystemLogRepository systemRepository)
     {
         _userQuery = userQuery;
-        _appRepository = appRepository;
+        _systemRepository = systemRepository;
     }
 
     public async Task<ResultHandler<UserAccount>> Handle(LoginUserAccountCommand command)
@@ -27,11 +27,11 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
 
             if (userAccount is null || !userAccount.Password.Value.VerifyHash(command.Password))
             {
-                await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Falha no login: credenciais inválidas para o e-mail '{command.Email}'."));
+                await _systemRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Falha no login: credenciais inválidas para o e-mail '{command.Email}'."));
                 return ResultHandler<UserAccount>.Fail("Credenciais incorretas.");
             }
 
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "UserAccount", $"Login bem-sucedido: usuário com e-mail '{command.Email}'."));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Info, "UserAccount", $"Login bem-sucedido: usuário com e-mail '{command.Email}'."));
 
             return ResultHandler<UserAccount>.Ok("Login realizado com sucesso.", userAccount);
         }
@@ -39,14 +39,14 @@ public class LoginUserAccountHandler : ILoginUserAccountHandler
         catch (Exception ex) when (ex is DomainException or EmailRegexException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Validation, "UserAccount", $"Erro de validação no login com e-mail '{command.Email}': {errorMsg}"));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Validation, "UserAccount", $"Erro de validação no login com e-mail '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao fazer login com e-mail '{command.Email}': {errorMsg}"));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Error, "UserAccount", $"Erro inesperado ao fazer login com e-mail '{command.Email}': {errorMsg}"));
             return ResultHandler<UserAccount>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

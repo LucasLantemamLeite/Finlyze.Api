@@ -5,11 +5,11 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
 
-public class AppLogRepository : IAppLogRepository
+public class SystemLogRepository : ISystemLogRepository
 {
     private readonly IDbConnection _connection;
 
-    public AppLogRepository(IDbConnection connection) => _connection = connection;
+    public SystemLogRepository(IDbConnection connection) => _connection = connection;
 
     public async Task<int> CreateAsync(SystemLog log)
     {

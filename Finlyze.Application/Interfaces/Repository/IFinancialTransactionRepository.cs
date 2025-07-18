@@ -2,7 +2,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface ITransactionRepository
+public interface IFinancialTransactionRepository
 {
     Task<int> CreateAsync(FinancialTransaction transaction);
     Task<int> DeleteAsync(FinancialTransaction transaction);

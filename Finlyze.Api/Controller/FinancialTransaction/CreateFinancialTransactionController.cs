@@ -10,11 +10,11 @@ namespace Finlyze.Api.Controller.Transactions;
 [ApiController]
 [Route("api/v1")]
 [Tags("Transactions")]
-public class CreateUserAccountController : ControllerBase
+public class CreateFinancialTransactionController : ControllerBase
 {
-    private readonly ICreateTransactionHandler _handler;
+    private readonly ICreateFinancialTransactionHandler _handler;
 
-    public CreateUserAccountController(ICreateTransactionHandler handler) => _handler = handler;
+    public CreateFinancialTransactionController(ICreateFinancialTransactionHandler handler) => _handler = handler;
 
     [Authorize]
     [HttpPost("transactions")]

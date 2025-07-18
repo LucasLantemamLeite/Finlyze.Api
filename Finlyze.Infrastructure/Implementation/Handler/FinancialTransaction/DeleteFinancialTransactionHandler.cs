@@ -7,17 +7,17 @@ using Finlyze.Domain.ValueObject.Enums;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 
-public class DeleteTransactionHandler : IDeleteTransactionHandler
+public class DeleteFinancialTransactionHandler : IDeleteFinancialTransactionHandler
 {
-    private readonly ITransactionQuery _tranQuery;
-    private readonly ITransactionRepository _tranRepository;
-    private readonly IAppLogRepository _appRepository;
+    private readonly IFinancialTransactionQuery _tranQuery;
+    private readonly IFinancialTransactionRepository _tranRepository;
+    private readonly ISystemLogRepository _systemRepository;
 
-    public DeleteTransactionHandler(ITransactionQuery tranQuery, ITransactionRepository tranRepository, IAppLogRepository appRepository)
+    public DeleteFinancialTransactionHandler(IFinancialTransactionQuery tranQuery, IFinancialTransactionRepository tranRepository, ISystemLogRepository systemRepository)
     {
         _tranQuery = tranQuery;
         _tranRepository = tranRepository;
-        _appRepository = appRepository;
+        _systemRepository = systemRepository;
     }
 
     public async Task<ResultHandler<FinancialTransaction>> Handle(DeleteTransactionCommand command)
@@ -28,7 +28,7 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
 
             if (transaction is null)
             {
-                await _appRepository.CreateAsync(new SystemLog((int)ELog.Warning, "FinancialTransaction", $"Não foi possível deletar a transação: ID '{command.Id}' não encontrado."));
+                await _systemRepository.CreateAsync(new SystemLog((int)ELog.Warning, "FinancialTransaction", $"Não foi possível deletar a transação: ID '{command.Id}' não encontrado."));
                 return ResultHandler<FinancialTransaction>.Fail("Transação com esse ID não foi encontrada.");
             }
 
@@ -36,11 +36,11 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
 
             if (rows == 0)
             {
-                await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Falha ao deletar transação: ID '{transaction.Id}' do usuário '{transaction.UserAccountId}'."));
+                await _systemRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Falha ao deletar transação: ID '{transaction.Id}' do usuário '{transaction.UserAccountId}'."));
                 return ResultHandler<FinancialTransaction>.Fail("Falha ao deletar transação.");
             }
 
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "FinancialTransaction", $"Transação deletada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Info, "FinancialTransaction", $"Transação deletada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
             return ResultHandler<FinancialTransaction>.Ok("Transação deletada com sucesso.", null);
         }
@@ -48,7 +48,7 @@ public class DeleteTransactionHandler : IDeleteTransactionHandler
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Erro inesperado ao deletar transação com ID '{command.Id}': {errorMsg}"));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Erro inesperado ao deletar transação com ID '{command.Id}': {errorMsg}"));
             return ResultHandler<FinancialTransaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

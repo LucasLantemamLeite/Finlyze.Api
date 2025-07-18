@@ -4,7 +4,7 @@ using Finlyze.Application.Abstract.Interface.Handler.Result;
 
 namespace Finlyze.Application.Abstract.Interface.Handler;
 
-public interface IDeleteTransactionHandler
+public interface ICreateFinancialTransactionHandler
 {
-    Task<ResultHandler<FinancialTransaction>> Handle(DeleteTransactionCommand command);
+    Task<ResultHandler<FinancialTransaction>> Handle(CreateTransactionCommand command);
 }

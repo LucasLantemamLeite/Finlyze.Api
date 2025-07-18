@@ -10,11 +10,11 @@ namespace Finlyze.Api.Controller.Transactions;
 [ApiController]
 [Route("api/v1")]
 [Tags("Transactions")]
-public class DeleteTrasactionController : ControllerBase
+public class DeleteFinancialTrasactionController : ControllerBase
 {
-    private readonly IDeleteTransactionHandler _handler;
+    private readonly IDeleteFinancialTransactionHandler _handler;
 
-    public DeleteTrasactionController(IDeleteTransactionHandler handler) => _handler = handler;
+    public DeleteFinancialTrasactionController(IDeleteFinancialTransactionHandler handler) => _handler = handler;
 
     [Authorize]
     [HttpDelete("transactions")]

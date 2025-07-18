@@ -8,17 +8,17 @@ using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
 
-public class CreateTransactionHandler : ICreateTransactionHandler
+public class CreateFinancialTransactionHandler : ICreateFinancialTransactionHandler
 {
     private readonly IUserAccountQuery _userQuery;
-    private readonly ITransactionRepository _transRepository;
-    private readonly IAppLogRepository _appRepository;
+    private readonly IFinancialTransactionRepository _tranRepository;
+    private readonly ISystemLogRepository _systemRepository;
 
-    public CreateTransactionHandler(IUserAccountQuery userQuery, ITransactionRepository transReposotory, IAppLogRepository appRepository)
+    public CreateFinancialTransactionHandler(IUserAccountQuery userQuery, IFinancialTransactionRepository tranReposotory, ISystemLogRepository systemRepository)
     {
         _userQuery = userQuery;
-        _transRepository = transReposotory;
-        _appRepository = appRepository;
+        _tranRepository = tranReposotory;
+        _systemRepository = systemRepository;
     }
 
     public async Task<ResultHandler<FinancialTransaction>> Handle(CreateTransactionCommand command)
@@ -29,17 +29,17 @@ public class CreateTransactionHandler : ICreateTransactionHandler
 
             if (existingUser is null)
             {
-                await _appRepository.CreateAsync(new SystemLog((int)ELog.Warning, "FinancialTransaction", $"Falha ao criar transação: usuário com ID '{command.UserAccountId}' não encontrado."));
+                await _systemRepository.CreateAsync(new SystemLog((int)ELog.Warning, "FinancialTransaction", $"Falha ao criar transação: usuário com ID '{command.UserAccountId}' não encontrado."));
                 return ResultHandler<FinancialTransaction>.Fail("Usuário com esse ID não foi encontrado.");
             }
 
             var transaction = new FinancialTransaction(command.Title, command.Description, command.Amount, command.TranType, command.CreateAt, command.UserAccountId);
 
-            var id = await _transRepository.UpdateAsync(transaction);
+            var id = await _tranRepository.UpdateAsync(transaction);
 
             transaction.ChangeId(id);
 
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Info, "FinancialTransaction", $"Transação criada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Info, "FinancialTransaction", $"Transação criada com sucesso: ID '{transaction.Id}' vinculada ao usuário '{transaction.UserAccountId}'."));
 
             return ResultHandler<FinancialTransaction>.Ok("Transação criada com sucesso.", transaction);
         }
@@ -47,14 +47,14 @@ public class CreateTransactionHandler : ICreateTransactionHandler
         catch (Exception ex) when (ex is DomainException or EnumException)
         {
             var errorMsg = ex.InnerException?.Message ?? ex.Message ?? "Erro de validação.";
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Validation, "FinancialTransaction", $"Falha de validação ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Validation, "FinancialTransaction", $"Falha de validação ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
             return ResultHandler<FinancialTransaction>.Fail(errorMsg);
         }
 
         catch (Exception e)
         {
             var errorMsg = e.InnerException?.Message ?? e.Message ?? "Erro desconhecido.";
-            await _appRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Erro inesperado ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
+            await _systemRepository.CreateAsync(new SystemLog((int)ELog.Error, "FinancialTransaction", $"Erro inesperado ao criar transação para o usuário '{command.UserAccountId}': {errorMsg}"));
             return ResultHandler<FinancialTransaction>.Fail("Ocorreu um erro interno no servidor. Tente novamente mais tarde.");
         }
     }

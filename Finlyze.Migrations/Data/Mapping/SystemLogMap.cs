@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Finlyze.Migrations.Data.Mapping;
 
-public class AppLogMap : IEntityTypeConfiguration<SystemLog>
+public class SystemLogMap : IEntityTypeConfiguration<SystemLog>
 {
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<SystemLog> builder)
     {

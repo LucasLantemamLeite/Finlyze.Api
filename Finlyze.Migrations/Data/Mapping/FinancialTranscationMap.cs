@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Finlyze.Migrations.Data.Mapping;
 
-public class TransactionMap : IEntityTypeConfiguration<FinancialTransaction>
+public class FinancialTransactionMap : IEntityTypeConfiguration<FinancialTransaction>
 {
     public void Configure(EntityTypeBuilder<FinancialTransaction> builder)
     {

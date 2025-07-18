@@ -9,8 +9,8 @@ public static class RepositoryInjection
     public static IServiceCollection RegisterRepositories(this IServiceCollection service)
     {
         service.AddScoped<IUserAccountRepository, UserAccountRepository>();
-        service.AddScoped<ITransactionRepository, TransactionRepository>();
-        service.AddScoped<IAppLogRepository, AppLogRepository>();
+        service.AddScoped<IFinancialTransactionRepository, FinancialTransactionRepository>();
+        service.AddScoped<ISystemLogRepository, SystemLogRepository>();
 
         return service;
     }

@@ -4,7 +4,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface.Handler;
 
-public interface IUpdateTransactionHandler
+public interface IUpdateFinancialTransactionHandler
 {
     Task<ResultHandler<FinancialTransaction>> Handle(UpdateTransactionCommand command);
 }

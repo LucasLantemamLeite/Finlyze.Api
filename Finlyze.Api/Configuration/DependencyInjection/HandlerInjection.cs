@@ -13,8 +13,8 @@ public static class HandlerInjection
         service.AddScoped<ILoginUserAccountHandler, LoginUserAccountHandler>();
         service.AddScoped<IUpdateUserAccountHandler, UpdateUserAccountHandler>();
         service.AddScoped<ICreateAdminUserAccountHandler, CreateAdminUserAccountHandler>();
-        service.AddScoped<ICreateTransactionHandler, CreateTransactionHandler>();
-        service.AddScoped<IDeleteTransactionHandler, DeleteTransactionHandler>();
+        service.AddScoped<ICreateFinancialTransactionHandler, CreateFinancialTransactionHandler>();
+        service.AddScoped<IDeleteFinancialTransactionHandler, DeleteFinancialTransactionHandler>();
 
         return service;
     }

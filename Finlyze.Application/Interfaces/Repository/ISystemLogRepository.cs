@@ -2,7 +2,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface IAppLogRepository
+public interface ISystemLogRepository
 {
     Task<int> CreateAsync(SystemLog log);
     Task<int> DeleteAsync(SystemLog log);

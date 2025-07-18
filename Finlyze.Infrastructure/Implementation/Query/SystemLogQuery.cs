@@ -7,11 +7,11 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 
-public class AppLogQuery : IAppLogQuery
+public class SystemLogQuery : ISystemLogQuery
 {
     private readonly IDbConnection _connection;
 
-    public AppLogQuery(IDbConnection connection) => _connection = connection;
+    public SystemLogQuery(IDbConnection connection) => _connection = connection;
 
     private const string SqlSelectBase = "SELECT Id, LogType, LogTitle, LogDescription, LogCreateAt FROM SystemLog";
 

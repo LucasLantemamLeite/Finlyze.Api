@@ -7,11 +7,11 @@ using Finlyze.Application.Entity.Raw.Convert;
 
 namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
 
-public class TransactionQuery : ITransactionQuery
+public class FinancialTransactionQuery : IFinancialTransactionQuery
 {
     private readonly IDbConnection _connection;
 
-    public TransactionQuery(IDbConnection connection) => _connection = connection;
+    public FinancialTransactionQuery(IDbConnection connection) => _connection = connection;
     private const string SqlSelectBase = "SELECT Id, TransactionTitle, TransactionDescription, Amount, TypeTransaction, TransactionCreateAt, TransactionUpdateAt, UserAccountId FROM FinancialTransaction";
 
     public async Task<IEnumerable<FinancialTransaction>> GetByAmountAsync(decimal amount)

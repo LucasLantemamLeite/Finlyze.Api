@@ -2,7 +2,7 @@ using Finlyze.Domain.Entity;
 
 namespace Finlyze.Application.Abstract.Interface;
 
-public interface IAppLogQuery
+public interface ISystemLogQuery
 {
     Task<SystemLog?> GetByIdAsync(int id);
     Task<IEnumerable<SystemLog>> GetByTypeAsync(int type);
