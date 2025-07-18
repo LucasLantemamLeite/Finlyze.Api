@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Finlyze.Application.Dto;
 
-public class CreateTransactionDto
+public class CreateFinancialTransactionDto
 {
     [Required(ErrorMessage = "O campo de Title é obrigatório.")]
     [MaxLength(100, ErrorMessage = "O campo de Title deve ter no máximo 100 caracteres.")]

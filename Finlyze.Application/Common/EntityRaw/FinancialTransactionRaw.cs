@@ -1,6 +1,6 @@
 namespace Finlyze.Application.Entity.Raw;
 
-public class TransactionRaw
+public class FinancialTransactionRaw
 {
     public int Id { get; set; }
     public string Title { get; set; }

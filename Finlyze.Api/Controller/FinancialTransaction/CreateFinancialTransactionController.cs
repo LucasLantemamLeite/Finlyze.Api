@@ -18,7 +18,7 @@ public class CreateFinancialTransactionController : ControllerBase
 
     [Authorize]
     [HttpPost("transactions")]
-    public async Task<IActionResult> CreateAsync([FromBody] CreateTransactionDto tran_dto)
+    public async Task<IActionResult> CreateAsync([FromBody] CreateFinancialTransactionDto tran_dto)
     {
         try
         {

@@ -1,6 +1,6 @@
 namespace Finlyze.Application.Entity.Raw;
 
-public class AppLogRaw
+public class SystemLogRaw
 {
     public int Id { get; set; }
     public int LogType { get; set; }

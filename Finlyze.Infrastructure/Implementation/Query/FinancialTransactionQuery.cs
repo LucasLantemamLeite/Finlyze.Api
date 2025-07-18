@@ -18,7 +18,7 @@ public class FinancialTransactionQuery : IFinancialTransactionQuery
     {
         var sql = $"{SqlSelectBase} WHERE Amount = @Amount";
         var parameters = new { Amount = amount };
-        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
+        var raw = await _connection.QueryAsync<FinancialTransactionRaw>(sql, parameters);
 
         return raw.ToEnumerableTransaction();
     }
@@ -27,7 +27,7 @@ public class FinancialTransactionQuery : IFinancialTransactionQuery
     {
         var sql = $"{SqlSelectBase} WHERE CreateAt = @CreateAt";
         var parameters = new { CreateAt = create_date };
-        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
+        var raw = await _connection.QueryAsync<FinancialTransactionRaw>(sql, parameters);
 
         return raw.ToEnumerableTransaction();
     }
@@ -36,7 +36,7 @@ public class FinancialTransactionQuery : IFinancialTransactionQuery
     {
         var sql = $"{SqlSelectBase} WHERE Id = @Id";
         var parameters = new { Id = id };
-        var raw = await _connection.QuerySingleOrDefaultAsync<TransactionRaw>(sql, parameters);
+        var raw = await _connection.QuerySingleOrDefaultAsync<FinancialTransactionRaw>(sql, parameters);
 
         return raw == null ? null : raw.ToSingleTransaction();
     }
@@ -45,7 +45,7 @@ public class FinancialTransactionQuery : IFinancialTransactionQuery
     {
         var sql = $"{SqlSelectBase} WHERE Title = @Title";
         var parameters = new { Title = title };
-        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
+        var raw = await _connection.QueryAsync<FinancialTransactionRaw>(sql, parameters);
 
         return raw.ToEnumerableTransaction();
     }
@@ -54,7 +54,7 @@ public class FinancialTransactionQuery : IFinancialTransactionQuery
     {
         var sql = $"{SqlSelectBase} WHERE TranType = @TranType";
         var parameters = new { TranType = type };
-        var raw = await _connection.QueryAsync<TransactionRaw>(sql, parameters);
+        var raw = await _connection.QueryAsync<FinancialTransactionRaw>(sql, parameters);
 
         return raw.ToEnumerableTransaction();
     }

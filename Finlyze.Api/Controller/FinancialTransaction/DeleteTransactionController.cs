@@ -18,7 +18,7 @@ public class DeleteFinancialTrasactionController : ControllerBase
 
     [Authorize]
     [HttpDelete("transactions")]
-    public async Task<IActionResult> CreateAsync([FromBody] DeleteTransactionDto tran_dto)
+    public async Task<IActionResult> CreateAsync([FromBody] DeleteFinancialTransactionDto tran_dto)
     {
         try
         {
