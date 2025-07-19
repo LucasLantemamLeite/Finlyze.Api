@@ -44,13 +44,15 @@ public class FakeUserAccountRepository : IUserAccountRepository
         if (index == -1)
             return Task.FromResult(0);
 
-        user.ChangeName(user.Name.Value);
-        user.ChangeEmail(user.Email.Value);
-        user.ChangePassword(user.Password.Value);
-        user.ChangePhoneNumber(user.PhoneNumber.Value);
-        user.ChangeBirthDate(user.BirthDate.Value);
+        var userAccount = _users[index];
 
-        _users[index] = user;
+        userAccount.ChangeName(user.Name.Value);
+        userAccount.ChangeEmail(user.Email.Value);
+        userAccount.ChangePassword(user.Password.Value);
+        userAccount.ChangePhoneNumber(user.PhoneNumber.Value);
+        userAccount.ChangeBirthDate(user.BirthDate.Value);
+
+        _users[index] = userAccount;
 
         return Task.FromResult(1);
     }
