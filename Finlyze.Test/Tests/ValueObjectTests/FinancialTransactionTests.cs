@@ -3,8 +3,8 @@ using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Test.Validation.Entities;
 
-[Trait("Category", "Transaction")]
-public class TransactionTest
+[Trait("Category", "FinancialTransaction")]
+public class FinancialTransaction
 {
 
     [Theory]
@@ -49,7 +49,7 @@ public class TransactionTest
     [Theory]
     [InlineData(1)]
     [InlineData(2)]
-    public static void Dado_Um_TypeTransaction_Válido_Adiciona_Na_Entidade(int type)
+    public static void Dado_Um_TranType_Válido_Adiciona_Na_Entidade(int type)
     {
         var ex = Record.Exception(() => new TranType(type));
         Assert.Null(ex);
@@ -60,7 +60,7 @@ public class TransactionTest
     [InlineData(4)]
     [InlineData(999)]
     [InlineData(-1)]
-    public static void Dado_Um_TypeTransaction_Inválido_Lança_Exceção(int type)
+    public static void Dado_Um_TranType_Inválido_Lança_Exceção(int type)
     {
         var ex = Assert.Throws<EnumException>(() => new TranType(type));
         Assert.NotNull(ex);

@@ -3,9 +3,8 @@ using Finlyze.Domain.ValueObject.Validation;
 
 namespace Finlyze.Test.Validation.Entities;
 
-
-[Trait("Category", "AppLog")]
-public class AppLogTest
+[Trait("Category", "SystemLog")]
+public class SystemLogTest
 {
 
     [Theory]
