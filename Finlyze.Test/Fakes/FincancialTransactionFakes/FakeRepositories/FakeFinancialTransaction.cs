@@ -21,7 +21,7 @@ public class FakeFinancialTransactionRepository : IFinancialTransactionRepositor
         if (existingTransaction is null)
             return Task.FromResult(0);
 
-        _transactions.Remove(transaction);
+        _transactions.Remove(existingTransaction);
         return Task.FromResult(1);
     }
 
