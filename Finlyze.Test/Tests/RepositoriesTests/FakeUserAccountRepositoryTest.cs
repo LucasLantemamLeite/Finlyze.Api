@@ -24,6 +24,7 @@ public class FakeUserAccountRepositoryTest
                 true,
                 1
             ),
+
             new UserAccount(
                 Guid.Parse("22222222-2222-2222-2222-222222222222"),
                 "Maria Silva",
@@ -44,7 +45,13 @@ public class FakeUserAccountRepositoryTest
     [Fact]
     public async Task Dado_Um_UserAccount_Válido_Adiciona_No_Banco()
     {
-        var userAccount = new UserAccount("Ana Clara", "anaclara@finlyze.com.br", "senhaforte19871", "+5528975071695", DateOnly.FromDateTime(new DateTime(1984, 9, 13)));
+        var userAccount = new UserAccount(
+            "Ana Clara",
+            "anaclara@finlyze.com.br",
+            "senhaforte19871",
+            "+5528975071695",
+            DateOnly.FromDateTime(new DateTime(1984, 9, 13))
+        );
 
         var result = await _userRepository.CreateAsync(userAccount);
 
@@ -55,7 +62,13 @@ public class FakeUserAccountRepositoryTest
     [Fact]
     public async Task Dado_Um_UserAccount_Com_Email_Já_Utilizado_Não_Adiciona_No_Banco()
     {
-        var userAccount = new UserAccount("Ana Clara", "maria.silva@finlyze.com", "senhaforte19871", "+5528975071695", DateOnly.FromDateTime(new DateTime(1984, 9, 13)));
+        var userAccount = new UserAccount(
+            "Ana Clara",
+            "maria.silva@finlyze.com",
+            "senhaforte19871",
+            "+5528975071695",
+            DateOnly.FromDateTime(new DateTime(1984, 9, 13))
+        );
 
         var result = await _userRepository.CreateAsync(userAccount);
 
@@ -66,7 +79,13 @@ public class FakeUserAccountRepositoryTest
     [Fact]
     public async Task Dado_Um_UserAccount_Com_PhoneNumber_Já_Utilizado_Não_Adiciona_No_Banco()
     {
-        var userAccount = new UserAccount("Ana Clara", "mariazin@gmail.com", "senhaforte19871", "+5511988884321", DateOnly.FromDateTime(new DateTime(1984, 9, 13)));
+        var userAccount = new UserAccount(
+            "Ana Clara",
+            "mariazin@gmail.com",
+            "senhaforte19871",
+            "+5511988884321",
+            DateOnly.FromDateTime(new DateTime(1984, 9, 13))
+        );
 
         var result = await _userRepository.CreateAsync(userAccount);
 
@@ -79,15 +98,15 @@ public class FakeUserAccountRepositoryTest
     {
         var userAccount = new UserAccount(
             Guid.Parse("22222222-2222-2222-2222-222222222222"),
-                "Maria Silva",
-                "maria.silva@finlyze.com",
-                "SeguraEssaSenha456@",
-                "+5511988884321",
-                DateOnly.FromDateTime(new DateTime(1999, 12, 25)),
-                DateTime.UtcNow.AddDays(-3),
-                true,
-                1
-            );
+            "Maria Silva",
+            "maria.silva@finlyze.com",
+            "SeguraEssaSenha456@",
+            "+5511988884321",
+            DateOnly.FromDateTime(new DateTime(1999, 12, 25)),
+            DateTime.UtcNow.AddDays(-3),
+            true,
+            1
+        );
 
         var result = await _userRepository.DeleteAsync(userAccount);
 
@@ -100,15 +119,15 @@ public class FakeUserAccountRepositoryTest
     {
         var userAccount = new UserAccount(
             Guid.Parse("22222222-2222-2222-2222-222222222223"),
-                "Maria Silva",
-                "maria.silva@finlyze.com",
-                "SeguraEssaSenha456@",
-                "+5511988884321",
-                DateOnly.FromDateTime(new DateTime(1999, 12, 25)),
-                DateTime.UtcNow.AddDays(-3),
-                true,
-                1
-            );
+            "Maria Silva",
+            "maria.silva@finlyze.com",
+            "SeguraEssaSenha456@",
+            "+5511988884321",
+            DateOnly.FromDateTime(new DateTime(1999, 12, 25)),
+            DateTime.UtcNow.AddDays(-3),
+            true,
+            1
+        );
 
         var result = await _userRepository.DeleteAsync(userAccount);
 
