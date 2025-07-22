@@ -27,7 +27,7 @@ public class FakeCreateUserAccountHandler : ICreateUserAccountHandler
         if (existingEmail is not null)
             return ResultHandler<UserAccount>.Fail("Email já está sendo usado.");
 
-        var existingPhone = _userQuery.GetByPhoneNumberAsync(command.PhoneNumber);
+        var existingPhone = await _userQuery.GetByPhoneNumberAsync(command.PhoneNumber);
 
         if (existingPhone is not null)
             return ResultHandler<UserAccount>.Fail("Número de telefone já está sendo usado.");
