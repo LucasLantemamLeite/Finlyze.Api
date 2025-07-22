@@ -35,7 +35,7 @@ public class CreateFinancialTransactionController : ControllerBase
             if (!Guid.TryParse(userId, out guidId))
                 return BadRequest(new { Message = "Id inválido." });
 
-            var command = new CreateTransactionCommand(tran_dto.Title, tran_dto.Description, tran_dto.Amount, tran_dto.Type, tran_dto.CreateAt, guidId);
+            var command = new CreateFinancialTransactionCommand(tran_dto.Title, tran_dto.Description, tran_dto.Amount, tran_dto.Type, tran_dto.CreateAt, guidId);
             var result = await _handler.Handle(command);
 
             if (!result.Success)

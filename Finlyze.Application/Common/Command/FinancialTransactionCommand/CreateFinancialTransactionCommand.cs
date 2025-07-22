@@ -1,6 +1,6 @@
 namespace Finlyze.Application.Abstract.Interface.Command;
 
-public class CreateTransactionCommand
+public class CreateFinancialTransactionCommand
 {
     public string Title { get; set; }
     public string? Description { get; set; }
@@ -9,7 +9,7 @@ public class CreateTransactionCommand
     public DateTime CreateAt { get; set; }
     public Guid UserAccountId { get; set; }
 
-    public CreateTransactionCommand(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
+    public CreateFinancialTransactionCommand(string title, string? description, decimal amount, int type, DateTime create, Guid userAccountId)
     {
         Title = title;
         Description = description;

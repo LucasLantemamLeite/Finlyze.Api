@@ -6,5 +6,5 @@ namespace Finlyze.Application.Abstract.Interface.Handler;
 
 public interface IDeleteFinancialTransactionHandler
 {
-    Task<ResultHandler<FinancialTransaction>> Handle(DeleteTransactionCommand command);
+    Task<ResultHandler<FinancialTransaction>> Handle(DeleteFinancialTransactionCommand command);
 }

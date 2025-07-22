@@ -1,6 +1,6 @@
 namespace Finlyze.Application.Abstract.Interface.Command;
 
-public class UpdateTransactionCommand
+public class UpdateFinancialTransactionCommand
 {
     public int Id { get; set; }
     public string Title { get; set; }
@@ -9,7 +9,7 @@ public class UpdateTransactionCommand
     public int TranType { get; set; }
     public DateTime CreateAt { get; set; }
 
-    public UpdateTransactionCommand(int id, string title, string description, decimal amount, int type, DateTime create)
+    public UpdateFinancialTransactionCommand(int id, string title, string description, decimal amount, int type, DateTime create)
     {
         Id = id;
         Title = title;

@@ -20,7 +20,7 @@ public class DeleteFinancialTransactionHandler : IDeleteFinancialTransactionHand
         _systemRepository = systemRepository;
     }
 
-    public async Task<ResultHandler<FinancialTransaction>> Handle(DeleteTransactionCommand command)
+    public async Task<ResultHandler<FinancialTransaction>> Handle(DeleteFinancialTransactionCommand command)
     {
         try
         {

@@ -21,7 +21,7 @@ public class UpdateFinancialTransactionHandler : IUpdateFinancialTransactionHand
         _systemRepository = systemRepository;
     }
 
-    public async Task<ResultHandler<FinancialTransaction>> Handle(UpdateTransactionCommand command)
+    public async Task<ResultHandler<FinancialTransaction>> Handle(UpdateFinancialTransactionCommand command)
     {
         try
         {

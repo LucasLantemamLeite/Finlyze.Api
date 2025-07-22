@@ -21,7 +21,7 @@ public class CreateFinancialTransactionHandler : ICreateFinancialTransactionHand
         _systemRepository = systemRepository;
     }
 
-    public async Task<ResultHandler<FinancialTransaction>> Handle(CreateTransactionCommand command)
+    public async Task<ResultHandler<FinancialTransaction>> Handle(CreateFinancialTransactionCommand command)
     {
         try
         {

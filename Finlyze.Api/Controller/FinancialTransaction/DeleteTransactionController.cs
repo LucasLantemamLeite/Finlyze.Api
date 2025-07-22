@@ -30,7 +30,7 @@ public class DeleteFinancialTrasactionController : ControllerBase
             if (userId is null)
                 return Unauthorized();
 
-            var command = new DeleteTransactionCommand(tran_dto.Id);
+            var command = new DeleteFinancialTransactionCommand(tran_dto.Id);
             var result = await _handler.Handle(command);
 
             if (!result.Success)
