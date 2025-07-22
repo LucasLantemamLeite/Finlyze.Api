@@ -28,7 +28,7 @@ public class FakeUpdateUserAccountHandler : IUpdateUserAccountHandler
         if (existingUser is null)
             return ResultHandler<UserAccount>.Fail("Conta do usuário com esse Id não encontrado.");
 
-        if (!existingUser.Password.Value.VerifyHash(command.ConfirmPassword))
+        if (existingUser.Password.Value != command.ConfirmPassword)
             return ResultHandler<UserAccount>.Fail("Senha incorreta.");
 
         existingUser.ChangeName(command.Name);
