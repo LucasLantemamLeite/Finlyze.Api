@@ -7,13 +7,13 @@ using Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.UserAccountFake;
 
 namespace Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.UserAccountFake;
 
-public class FakeUserAccountLoginHandler : ILoginUserAccountHandler
+public class FakeLoginUserAccountHandler : ILoginUserAccountHandler
 {
     private readonly List<UserAccount> _users = new();
     private readonly FakeUserAccountQuery _userQuery;
     private readonly FakeUserAccountRepository _userRepository;
 
-    public FakeUserAccountLoginHandler(List<UserAccount> users)
+    public FakeLoginUserAccountHandler(List<UserAccount> users)
     {
         _users = users;
         _userQuery = new FakeUserAccountQuery(_users);
