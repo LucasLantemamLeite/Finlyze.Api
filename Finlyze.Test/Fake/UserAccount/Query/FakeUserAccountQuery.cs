@@ -1,7 +1,7 @@
 using Finlyze.Application.Abstracts.Interfaces.Queries;
 using Finlyze.Domain.Entities.UserAccountEntity;
 
-namespace Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFake;
+namespace Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFakes;
 
 public class FakeUserAccountQuery : IUserAccountQuery
 {

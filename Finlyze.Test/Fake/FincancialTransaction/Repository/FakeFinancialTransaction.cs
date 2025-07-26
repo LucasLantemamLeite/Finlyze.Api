@@ -1,7 +1,7 @@
 using Finlyze.Application.Abstracts.Interfaces.Repositories;
 using Finlyze.Domain.Entities.FinancialTransactionEntity;
 
-namespace Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.FinancialTransactionFake;
+namespace Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.FinancialTransactionFakes;
 
 public class FakeFinancialTransactionRepository : IFinancialTransactionRepository
 {

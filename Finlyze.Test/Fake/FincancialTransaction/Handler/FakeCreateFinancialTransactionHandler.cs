@@ -2,7 +2,7 @@ using Finlyze.Application.Abstracts.Interfaces.Commands;
 using Finlyze.Application.Abstracts.Interfaces.Handlers;
 using Finlyze.Application.Abstracts.Interfaces.Handlers.Result;
 using Finlyze.Domain.Entities.FinancialTransactionEntity;
-using Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.FinancialTransactionFake;
+using Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.FinancialTransactionFakes;
 
 namespace Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.FinancialTransactionFake;
 

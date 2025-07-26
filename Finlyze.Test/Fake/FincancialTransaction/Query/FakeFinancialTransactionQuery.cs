@@ -2,7 +2,7 @@ using Finlyze.Application.Abstracts.Interfaces.Queries;
 using Finlyze.Domain.Entities.FinancialTransactionEntity;
 using Finlyze.Domain.ValueObjects.Enums;
 
-namespace Finlyze.Test.Abstract.Interfaces.Queries.Fakes.FinancialTransactionFake;
+namespace Finlyze.Test.Abstract.Interfaces.Queries.Fakes.FinancialTransactionFakes;
 
 public class FakeFinancialTransactionQuery : IFinancialTransactionQuery
 {

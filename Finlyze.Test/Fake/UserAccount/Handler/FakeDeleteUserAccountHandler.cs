@@ -2,10 +2,10 @@ using Finlyze.Application.Abstracts.Interfaces.Commands;
 using Finlyze.Application.Abstracts.Interfaces.Handlers;
 using Finlyze.Application.Abstracts.Interfaces.Handlers.Result;
 using Finlyze.Domain.Entities.UserAccountEntity;
-using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFake;
-using Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.UserAccountFake;
+using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFakes;
+using Finlyze.Test.Abstract.Interfaces.Repositories.Fakes.UserAccountFakes;
 
-namespace Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.UserAccountFake;
+namespace Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.UserAccountFakes;
 
 public class FakeDeleteUserAccountHandler : IDeleteAccountHandler
 {
