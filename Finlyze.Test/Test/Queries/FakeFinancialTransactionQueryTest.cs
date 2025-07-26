@@ -1,6 +1,6 @@
 using Finlyze.Domain.Entities.FinancialTransactionEntity;
 using Finlyze.Domain.ValueObjects.Enums;
-using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.FinancialTransactionFake;
+using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.FinancialTransactionFakes;
 
 namespace Finlyze.Test.Queries.Fakes.FinancialTransactionFakes;
 

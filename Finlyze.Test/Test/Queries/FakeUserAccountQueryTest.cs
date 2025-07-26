@@ -1,5 +1,5 @@
 using Finlyze.Domain.Entities.UserAccountEntity;
-using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFake;
+using Finlyze.Test.Abstract.Interfaces.Queries.Fakes.UserAccountFakes;
 
 namespace Finlyze.Test.Queries.Fakes.UserAccountFakes;
 

@@ -1,6 +1,6 @@
 using Finlyze.Application.Abstracts.Interfaces.Commands;
 using Finlyze.Domain.Entities.UserAccountEntity;
-using Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.UserAccountFake;
+using Finlyze.Test.Abstract.Interfaces.Handlers.Fakes.UserAccountFakes;
 
 namespace Finlyze.Test.Handlers.Fakes.UserAccountFakes;
 
