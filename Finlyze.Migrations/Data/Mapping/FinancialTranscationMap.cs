@@ -1,4 +1,6 @@
-using Finlyze.Domain.Entity;
+
+using Finlyze.Domain.Entities;
+using Finlyze.Domain.Entities.FinancialTransactionEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

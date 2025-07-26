@@ -4,7 +4,7 @@ using Finlyze.Migrations.Data.Context;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 
-namespace Finlyze.Api.Configuration.DependencyInjection;
+namespace Finlyze.Api.Configurations.DependencyInjection;
 
 public static class ServiceInjection
 {

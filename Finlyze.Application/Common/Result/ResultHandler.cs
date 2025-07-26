@@ -1,4 +1,4 @@
-namespace Finlyze.Application.Abstract.Interface.Handler.Result;
+namespace Finlyze.Application.Abstracts.Interfaces.Handlers.Result;
 
 public class ResultHandler<T>
 {

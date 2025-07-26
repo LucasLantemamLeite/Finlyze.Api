@@ -1,10 +1,10 @@
 using System.Data;
 using Dapper;
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Domain.Entity;
 using Finlyze.Application.Authentication.Hasher;
+using Finlyze.Application.Abstracts.Interfaces.Repositories;
+using Finlyze.Domain.Entities.UserAccountEntity;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
+namespace Finlyze.Infrastructure.Implementations.Interfaces.Repositories;
 
 public class UserAccountRepository : IUserAccountRepository
 {

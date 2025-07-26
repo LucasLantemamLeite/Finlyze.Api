@@ -1,4 +1,4 @@
-namespace Finlyze.Application.Entity.Raw;
+namespace Finlyze.Application.Entities.Raws;
 
 public class UserAccountRaw
 {

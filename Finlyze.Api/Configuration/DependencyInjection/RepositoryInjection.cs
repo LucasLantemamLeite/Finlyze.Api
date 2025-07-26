@@ -1,8 +1,7 @@
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Infrastructure.Implementation.Interfaces;
-using Finlyze.Infrastructure.Implementation.Interfaces.Repository;
+using Finlyze.Application.Abstracts.Interfaces.Repositories;
+using Finlyze.Infrastructure.Implementations.Interfaces.Repositories;
 
-namespace Finlyze.Api.Configuration.DependencyInjection;
+namespace Finlyze.Api.Configurations.DependencyInjection;
 
 public static class RepositoryInjection
 {

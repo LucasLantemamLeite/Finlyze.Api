@@ -1,7 +1,7 @@
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Infrastructure.Implementation.Interfaces.Query;
+using Finlyze.Application.Abstracts.Interfaces.Queries;
+using Finlyze.Infrastructure.Implementations.Interfaces.Queries;
 
-namespace Finlyze.Api.Configuration.DependencyInjection;
+namespace Finlyze.Api.Configurations.DependencyInjection;
 
 public static class QueryInjection
 {

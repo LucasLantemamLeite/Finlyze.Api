@@ -1,4 +1,4 @@
-using Finlyze.Domain.Entity;
+using Finlyze.Domain.Entities.SystemLogEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finlyze.Migrations.Data.Mapping;

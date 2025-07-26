@@ -1,4 +1,4 @@
-namespace Finlyze.Api.Configuration.App;
+namespace Finlyze.Api.Configurations.App;
 
 public static class AppConfig
 {

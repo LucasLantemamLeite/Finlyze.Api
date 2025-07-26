@@ -1,4 +1,4 @@
-using Finlyze.Domain.Entity;
+using Finlyze.Domain.Entities.UserAccountEntity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

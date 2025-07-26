@@ -1,6 +1,6 @@
-using Finlyze.Domain.Entity;
+using Finlyze.Domain.Entities.FinancialTransactionEntity;
 
-namespace Finlyze.Application.Entity.Raw.Convert;
+namespace Finlyze.Application.Entities.Raws.Converts;
 
 public static class MapRawToFinancialTransaction
 {

@@ -1,8 +1,7 @@
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Application.Abstract.Interface.Handler;
-using Finlyze.Infrastructure.Implementation.Interfaces.Handler;
+using Finlyze.Application.Abstracts.Interfaces.Handlers;
+using Finlyze.Infrastructure.Implementations.Interfaces.Handlers;
 
-namespace Finlyze.Api.Configuration.DependencyInjection;
+namespace Finlyze.Api.Configurations.DependencyInjection;
 
 public static class HandlerInjection
 {
