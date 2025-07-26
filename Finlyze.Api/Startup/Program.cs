@@ -1,6 +1,6 @@
-using Finlyze.Api.Configuration.App;
-using Finlyze.Api.Configuration.Builder;
-using Finlyze.Api.Configuration.DependencyInjection;
+using Finlyze.Api.Configurations.App;
+using Finlyze.Api.Configurations.Builder;
+using Finlyze.Api.Configurations.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Finlyze.Api.Services.Jwt;
-using Finlyze.Domain.Entity;
+using Finlyze.Domain.Entities.UserAccountEntity;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Finlyze.Api.Services.TokenHandler;

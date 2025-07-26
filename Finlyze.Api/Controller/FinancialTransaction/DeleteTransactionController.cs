@@ -1,11 +1,11 @@
 using System.Security.Claims;
-using Finlyze.Application.Abstract.Interface.Command;
-using Finlyze.Application.Abstract.Interface.Handler;
-using Finlyze.Application.Dto;
+using Finlyze.Application.Abstracts.Interfaces.Commands;
+using Finlyze.Application.Abstracts.Interfaces.Handlers;
+using Finlyze.Application.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Finlyze.Api.Controller.Transactions;
+namespace Finlyze.Api.Controllers.FinancialTransactionControllers;
 
 [ApiController]
 [Route("api/v1")]

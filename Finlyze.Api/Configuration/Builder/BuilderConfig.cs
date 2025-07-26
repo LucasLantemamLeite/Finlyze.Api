@@ -1,12 +1,12 @@
 using System.Security.Claims;
 using System.Text;
 using Finlyze.Api.Services.Jwt;
-using Finlyze.Domain.ValueObject.Enums;
+using Finlyze.Domain.ValueObjects.Enums;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Finlyze.Api.Configuration.Builder;
+namespace Finlyze.Api.Configurations.Builder;
 
 public static class BuilderConfig
 {

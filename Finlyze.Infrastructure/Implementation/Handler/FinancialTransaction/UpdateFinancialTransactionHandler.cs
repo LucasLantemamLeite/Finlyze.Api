@@ -1,12 +1,14 @@
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Application.Abstract.Interface.Command;
-using Finlyze.Application.Abstract.Interface.Handler;
-using Finlyze.Application.Abstract.Interface.Handler.Result;
-using Finlyze.Domain.Entity;
-using Finlyze.Domain.ValueObject.Enums;
-using Finlyze.Domain.ValueObject.Validation;
+using Finlyze.Application.Abstracts.Interfaces.Commands;
+using Finlyze.Application.Abstracts.Interfaces.Handlers;
+using Finlyze.Application.Abstracts.Interfaces.Handlers.Result;
+using Finlyze.Application.Abstracts.Interfaces.Queries;
+using Finlyze.Application.Abstracts.Interfaces.Repositories;
+using Finlyze.Domain.Entities.FinancialTransactionEntity;
+using Finlyze.Domain.Entities.SystemLogEntity;
+using Finlyze.Domain.ValueObjects.Enums;
+using Finlyze.Domain.ValueObjects.Validations.Exceptions;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Handler;
+namespace Finlyze.Infrastructure.Implementations.Interfaces.Handlers;
 
 public class UpdateFinancialTransactionHandler : IUpdateFinancialTransactionHandler
 {

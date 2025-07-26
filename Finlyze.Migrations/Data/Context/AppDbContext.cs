@@ -1,4 +1,7 @@
-using Finlyze.Domain.Entity;
+using Finlyze.Domain.Entities;
+using Finlyze.Domain.Entities.FinancialTransactionEntity;
+using Finlyze.Domain.Entities.SystemLogEntity;
+using Finlyze.Domain.Entities.UserAccountEntity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Finlyze.Migrations.Data.Context;

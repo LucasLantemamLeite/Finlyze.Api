@@ -1,11 +1,11 @@
 using System.Data;
 using Dapper;
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Domain.Entity;
-using Finlyze.Application.Entity.Raw;
-using Finlyze.Application.Entity.Raw.Convert;
+using Finlyze.Application.Abstracts.Interfaces.Queries;
+using Finlyze.Application.Entities.Raws;
+using Finlyze.Domain.Entities.FinancialTransactionEntity;
+using Finlyze.Application.Entities.Raws.Converts;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
+namespace Finlyze.Infrastructure.Implementations.Interfaces.Queries;
 
 public class FinancialTransactionQuery : IFinancialTransactionQuery
 {

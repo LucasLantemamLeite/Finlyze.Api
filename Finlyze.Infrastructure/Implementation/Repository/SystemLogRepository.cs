@@ -1,9 +1,9 @@
 using System.Data;
 using Dapper;
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Domain.Entity;
+using Finlyze.Application.Abstracts.Interfaces.Repositories;
+using Finlyze.Domain.Entities.SystemLogEntity;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Repository;
+namespace Finlyze.Infrastructure.Implementations.Interfaces.Repositories;
 
 public class SystemLogRepository : ISystemLogRepository
 {

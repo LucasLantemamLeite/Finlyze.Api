@@ -1,11 +1,11 @@
 using System.Data;
 using Dapper;
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Application.Entity.Raw;
-using Finlyze.Application.Entity.Raw.Convert;
-using Finlyze.Domain.Entity;
+using Finlyze.Application.Abstracts.Interfaces.Queries;
+using Finlyze.Domain.Entities.SystemLogEntity;
+using Finlyze.Application.Entities.Raws.Converts;
+using Finlyze.Application.Entities.Raws;
 
-namespace Finlyze.Infrastructure.Implementation.Interfaces.Query;
+namespace Finlyze.Infrastructure.Implementations.Interfaces.Queries;
 
 public class SystemLogQuery : ISystemLogQuery
 {

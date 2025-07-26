@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using Finlyze.Application.Abstract.Interface;
-using Finlyze.Application.Abstract.Interface.Command;
+using Finlyze.Application.Abstracts.Interfaces.Commands;
+using Finlyze.Application.Abstracts.Interfaces.Handlers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Finlyze.Api.Controller.Users;
+namespace Finlyze.Api.Controllers.UserAccountControllers;
 
 [ApiController]
 [Route("api/v1")]
